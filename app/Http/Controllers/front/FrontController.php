@@ -1,31 +1,23 @@
 <?php
 
 namespace App\Http\Controllers\front;
-
+use App\Services\Front\HomePageService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\vendor\Shop;
-use App\Models\vendor\Product;
-use App\Models\vendor\ProductCategory;
-use App\Models\admin\Slider;
-use App\Models\admin\Blog;
-use App\Models\vendor\ProductBrand;
-use App\Traits\CommonTrait;
+
 
 class FrontController extends Controller
 {
-    //import trait
-     use CommonTrait;
+    protected $homeService;
+
+    public function __construct(HomePageService $homeService){
+          $this->HomePageService = $homeService;
+    }
 
     //home page method
     public function index(){
-        $shop=$this->activeShop();
-        $brand=$this->activeBrand();
-        $slider=Slider::where('status',1)->orderBy('id','DESC')->get();
-        $featured=Product::where(['status'=>1,'is_featured'=>1])->orderBy('id','DESC')->get();
-        $blog=Blog::where('status',1)->orderBy('id','DESC')->limit(3)->get();
-        return view('front.index',compact('shop','brand','slider','featured','blog'));
-    } 
+      return $this->HomePageService->index();
+    }
 
     //contact method view
     public function contact(){
@@ -34,62 +26,52 @@ class FrontController extends Controller
 
     //shop single method
     public function shopSingle($id){
-     $shop=Shop::findOrFail($id);
-     return view('front.shop.shopDetails',compact('shop'));
+      return $this->HomePageService->shopSingle($id);
     }
 
     //product single method
     public function productSingle($id){
-        $product=Product::findOrFail($id);
-        $attributeType=$product->productAttributeType($id);
-        return view('front.product.productDetails',compact('product','attributeType'));
+      return $this->HomePageService->productSingle($id);
+    }
+
+    //product review
+    public function productReview(Request $request,$productid){
+      return $this->HomePageService->productReview($request,$productid);
     }
 
     //product search
     public function search(Request $request){
-      if($request->cat_id==''){
-        $products=Product::where('status',1)
-        ->where('product_name', 'like', '%'.$request->search.'%')
-        ->select('products.id','products.product_name','products.image','products.product_slug')
-        ->get();
-      }else{
-        $products=ProductCategory::
-         where('category_id',$request->cat_id)
-        ->leftjoin('products','products.id','=','product_categories.product_id')
-        ->select('products.id','products.product_name','products.image','products.product_slug')
-        ->get();
-      }
-      return view('front.product.search',compact('products'));
+      return $this->HomePageService->search($request);
     }
 
     //category product method
     public function categoryProduct($id){
-      $category=ProductCategory::where(['category_id'=>$id,'status'=>1])->get();
-      return view('front.product.categoryProduct',compact('category'));
+      return $this->HomePageService->categoryProduct($id);
     }
 
     //all active category
     public function allCategory(){
-      $category=$this->activeCategory();
-      return view('front.category.allCategory',compact('category'));
+      return $this->HomePageService->allCategory();
     }
 
     //all active shop
     public function allShop(){
-      $allShop=$this->allActiveShop();
-      return view('front.shop.allShop',compact('allShop'));
+      return $this->HomePageService->allShop();
     }
 
-    //all active shop
+    //all active brand
      public function allBrand(){
-        $allbrand=$this->allActiveBrand();
-        return view('front.brand.allBrand',compact('allbrand'));
+      return $this->HomePageService->allBrand();
      }
 
     //brand product method
     public function brandProduct($id){
-      $brand=Product::where(['brand_id'=>$id,'status'=>1])->get();
-      return view('front.product.brandProduct',compact('brand'));
+      return $this->HomePageService->brandProduct($id);
+    }
+
+    //blog single method
+    public function blogSingle($id){
+      return $this->HomePageService->blogSingle($id);
     }
 
 }

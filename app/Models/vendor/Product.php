@@ -12,6 +12,7 @@ use App\Models\vendor\ProductCategory;
 use App\Models\vendor\ProductBrand;
 use App\Models\vendor\ProductAttribute;
 use App\Models\vendor\ProductGallery;
+use App\Models\customer\ProductReview;
 
 
 class Product extends Model
@@ -45,12 +46,11 @@ class Product extends Model
 
      //this function shows product multiple attribute type
     public function productAttributeType($id){
-      $data=ProductAttribute::where('product_id',$id)
+        return ProductAttribute::where('product_id',$id)
       ->where('product_attributes.status',1)
       ->leftjoin('attributes','attributes.id','=','product_attributes.type_id')
       ->groupBy('product_attributes.type_id')
       ->get();
-      return $data;
     }
 
     //this function show product multiple attribute value
@@ -65,8 +65,7 @@ class Product extends Model
 
     //this function show all product category in edit product page
     public function productCategorys($id){
-        $data = ProductCategory::where('product_id',$id)->get();
-        return $data;
+        return ProductCategory::where('product_id',$id)->get();
     }
   
     //this function show product shop in edit product page
@@ -76,7 +75,27 @@ class Product extends Model
 
     //this function show product shop in edit product page
     public function productGallery(){
-         return $this->hasMany(ProductGallery::class,'product_id');
+        return $this->hasMany(ProductGallery::class,'product_id');
+    }
+
+    //this function show related brand product
+    public function relatedProduct($id){
+        return Product::where('brand_id',$id)->get();
+    }
+
+    //this function show product review in single product page
+    public function productReview($id){
+        return ProductReview::where(['product_id'=>$id,'status'=>1])->get();
+    }
+
+    //this function show product review count in single product page
+    public function productReviewCount($id){
+        return ProductReview::where(['product_id'=>$id,'status'=>1])->count();
+    }
+
+    //this function show average rating
+    public function averageRating($id){
+      return ProductReview::where('product_id',$id)->avg('rating');
     }
 
     

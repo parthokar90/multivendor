@@ -47,4 +47,13 @@ use App\Http\Controllers\front\FrontController;
   Route::get('/brand/product/{id}/{slug}', [FrontController::class,'brandProduct'])->name('brand.product');
 //brand product route end
 
+//brand product route start
+  Route::post('/product/review/{productid}', [FrontController::class,'productReview'])->name('product.review');
+//brand product route end
+
+//blog route start
+  Route::get('/blog-single/{id}/{slug}', [FrontController::class,'blogSingle'])->name('blog.single');
+//blog route end
+
+
 

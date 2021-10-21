@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use DataTables;
+use DB;
 
 class CustomerController extends Controller
 {
@@ -21,7 +22,7 @@ class CustomerController extends Controller
      */
     public function index(Request $request)
     {
-        $list = User::orderBy('id','DESC')->get();
+        $list = DB::table('users')->orderBy('id','DESC')->get();
         if ($request->ajax()) {
             return Datatables::of($list)
                 ->addIndexColumn()

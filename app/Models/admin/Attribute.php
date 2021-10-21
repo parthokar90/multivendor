@@ -8,7 +8,7 @@ use App\Models\admin\AttributeValue;
 
 class Attribute extends Model
 {
-    
+    use HasFactory;
     //this function show attribute value name
     public function attributeValues(){
         return $this->hasMany(AttributeValue::class,'type_id');

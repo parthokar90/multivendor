@@ -14,4 +14,9 @@ class Shop extends Model
     public function products(){
         return $this->hasMany(Product::class,'shop_id');
     } 
+
+    //count shop product
+    public function shopProduct($id){
+       return Product::where('shop_id',$id)->count();
+    }
 }
