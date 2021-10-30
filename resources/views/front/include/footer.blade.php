@@ -28,8 +28,15 @@
                                 <div class="footer-title">
                                     <h4>my account</h4>
                                 </div>
+                                @if(Auth::guard('vendor')->check())
+                                    @php $url=route('vendor.dashboard'); @endphp
+                                 @elseif(Auth::guard('web')->check())
+                                    @php $url=route('customer.dashboard'); @endphp
+                                  @else 
+                                    @php $url=route('customer.login'); @endphp
+                                @endif
                                 <ul>
-                                    <li><a href="account.html">my account</a></li>
+                                    <li><a href="{{$url}}">my account</a></li>
                                     <li><a href="{{route('wishlist.index')}}">wishlist</a></li>
                                     <li><a href="{{route('customer.login')}}">login</a></li>
                                     <li><a href="{{route('contact.page')}}">addresses</a></li>
@@ -45,7 +52,7 @@
                                 </div>
                                 <ul>
                                     <li><a href="#!">help</a></li>
-                                    <li><a href="contact.html">contact us</a></li>
+                                    <li><a href="{{route('contact.page')}}">contact us</a></li>
                                     <li><a href="#!">feedback</a></li>
                                     <li><a href="#!">custom service</a></li>
                                     <li><a href="#!">reservations</a></li>

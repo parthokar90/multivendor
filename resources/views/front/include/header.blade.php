@@ -229,7 +229,7 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li><a href="!#">blog</a></li>
+                                <li><a href="{{route('home.blog')}}">blog</a></li>
                                 <li><a href="{{route('contact.page')}}">contact</a></li>
                             </ul>
                         </div>

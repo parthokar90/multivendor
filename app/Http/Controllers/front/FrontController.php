@@ -69,9 +69,16 @@ class FrontController extends Controller
       return $this->HomePageService->brandProduct($id);
     }
 
+    //all blog
+    public function blog(){
+      return $this->HomePageService->blog();
+    }
+
     //blog single method
     public function blogSingle($id){
       return $this->HomePageService->blogSingle($id);
     }
+
+    
 
 }

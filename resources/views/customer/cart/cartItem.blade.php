@@ -31,6 +31,7 @@
                         <table class="table">
                             <thead>
                                 <tr>
+                                    <th scope="col">shop</th>
                                     <th scope="col">image</th>
                                     <th scope="col">product name</th>
                                     <th scope="col">price</th>
@@ -42,6 +43,9 @@
                             <tbody>
                                 @forelse($item as $carts)
                                 <tr>
+                                    <td class="pro-name">
+                                        <a href="{{route('shop.single',array('id'=>$carts->shop->id,'slug'=>$carts->shop->shop_slug))}}">{{$carts->shop->shop_name}}</a>
+                                    </td>
                                     <th scope="row" class="pro-img">
                                         <a href="shop-4-column-sidebar.html">
                                             @if(isset($carts->attributeType))
@@ -69,7 +73,7 @@
                                     </td>
                                     <td class="pro-total"><p>{{number_format($carts->sub_total)}}</p></td>
                                     <td class="pro-delete">
-                                        <a href="{{route('item.delete',$carts->id)}}">
+                                        <a onclick="return confirm('are you sure want to delete??')" href="{{route('item.delete',$carts->id)}}">
                                             <i class="flaticon-delete"></i>
                                         </a>
                                     </td>
@@ -105,14 +109,14 @@
                     </div>
                     <div class="sub d-flex justify-content-between">
                         <p>Subtotal:</p>
-                        <p>{{number_format($subTotal)}}</p>
+                        <p>Tk {{number_format($subTotal)}}</p>
                     </div>
                     <div class="checkout">
                         <div class="d-flex justify-content-between">
                             <h5>total</h5>
                             <p>£220.00</p>
                         </div>
-                        <a href="checkout.html" class="button-style1">checkout <span class="btn-dot"></span></a>
+                        <a href="{{route('customer.checkout')}}" class="button-style1">checkout <span class="btn-dot"></span></a>
                     </div>
                 </div>
             </div>

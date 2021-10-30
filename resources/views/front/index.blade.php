@@ -140,15 +140,7 @@
                         </div>
                     </div>
                     <div class="col-lg-12">
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            @forelse ($toCat as $toCats)
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">{{$toCats->category_name}}</button>
-                                </li>
-                            @empty
-                               <p>No Collection Found</p>
-                            @endforelse
-                        </ul>
+                     
                         <div class="tab-content" id="myTabContent">
                             <!-- best seller -->
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -459,9 +451,6 @@
     </section>
     <!-- end featured area -->
 
-
-
-
      <!-- start new area -->
        <section class="home1 new" data-img="{{asset('front/assets/images/home1/new-bg.jpg')}}">
             <div class="container">
@@ -494,7 +483,7 @@
                             <div class="single-blog">
                                 <div class="blog-img item-animation3">
                                     <span class="item-animation3a"></span>
-                                    <img src="{{asset('admin/blog/'.$blogs->image)}}" alt="Blog Image"/>
+                                    <img src="{{asset('front/blog/'.$blogs->image)}}" alt="Blog Image"/>
                                 </div>
                                 <div class="content">
                                     <a href="#!">

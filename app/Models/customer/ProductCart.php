@@ -5,6 +5,8 @@ namespace App\Models\customer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\vendor\Product;
+use App\Models\vendor\Vendor;
+use App\Models\vendor\Shop;
 use App\Models\admin\Attribute;
 use App\Models\admin\AttributeValue;
 
@@ -23,6 +25,11 @@ class ProductCart extends Model
     //this function show product attribute value
     public function attributeValue(){
         return $this->belongsTo(AttributeValue::class,'attribute_value_id');
+    }
+
+    //this function show shop  name
+    public function shop(){
+        return $this->belongsTo(Shop::class,'shop_id');
     }
 
 

@@ -7,9 +7,13 @@ use App\Http\Controllers\front\FrontController;
   Route::get('/', [FrontController::class,'index'])->name('home.page');
 //home page route end
 
-//home page route start
+//blog route start
+  Route::get('/blog', [FrontController::class,'blog'])->name('home.blog');
+//blog route end
+
+//account route start
   Route::get('/account', [FrontController::class,'account'])->name('account.page');
-//home page route end
+//account route end
 
 //single shop route start
   Route::get('/shop/{id}/{slug}', [FrontController::class,'shopSingle'])->name('shop.single');

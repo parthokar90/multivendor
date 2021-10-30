@@ -63,8 +63,28 @@ class HomePageService{
         return $this->HomepageRepository->allCategory();
     }
 
+     //all blog  method repository service
+     public function blog(){
+        return $this->HomepageRepository->blog();
+      }
+
     //blog single method repository service
     public function blogSingle($id){
       return $this->HomepageRepository->blogSingle($id);
+    }
+
+    //cart index method repository service
+    public function cartIndex(){
+        return $this->HomepageRepository->cartIndex();
+    }
+
+    //cart add method repository service
+    public function cart($request){
+        return $this->HomepageRepository->cart($request);
+    }
+
+    //cart delete method repository service
+    public function cartDelete($id){
+        return $this->HomepageRepository->cartDelete($id);
     }
 }

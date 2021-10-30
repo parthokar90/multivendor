@@ -7,6 +7,7 @@ use App\Http\Controllers\customer\CartController;
 use App\Http\Controllers\customer\WishlistController;
 use App\Http\Controllers\customer\ProfileController;
 use App\Http\Controllers\customer\OrderController;
+use App\Http\Controllers\customer\CheckoutController;
 
 
 //login route start
@@ -23,10 +24,15 @@ use App\Http\Controllers\customer\OrderController;
   Route::get('customer/dashboard', [DashboardController::class,'index'])->name('customer.dashboard');
 //dashboard route end
 
-//wishlist route start
+//cart route start
   Route::resource('cart',CartController::class);
   Route::get('cart/item/delete/{id}',[CartController::class,'delete'])->name('item.delete');
-//wishlist route end
+//cart route end
+
+
+//checkout route start
+  Route::get('checkout',[CheckoutController::class,'index'])->name('customer.checkout');
+//checkout route end
 
 //wishlist route start
   Route::resource('wishlist',WishlistController::class);
