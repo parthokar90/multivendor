@@ -38,19 +38,21 @@
                         </li>
                     </ul>
                 </li>
-                
+
                 <li class="submenu">
-                    <a id="tables" class="" href="#">
+                    <a id="tables" class="@if($url==='admin.product.index' || $url==='admin.product.index') active @endif" href="#">
                         <i class="fab fa-product-hunt"></i>
-                        <span> Product </span>
+                        <span>Product</span>
                         <span class="menu-arrow"></span>
                     </a>
                     <ul class="list-unstyled">
-                        <li class="">
-                            <a href="">List</a>
+                        <li class="@if($url==='admin.product.index' || $url==='admin.product.index') active @endif">
+                            <a href="{{route('admin.product.index')}}">List</a>
                         </li>
                     </ul>
                 </li>
+
+
 
                 <li class="submenu">
                     <a id="tables" class="@if($url==='order.page' || $url==='order.page.edit') active @endif" href="#">
@@ -127,7 +129,7 @@
                 </li>
 
 
-                <li class="submenu">
+                {{-- <li class="submenu">
                     <a id="tables" href="#">
                         <i class="fas fa-user"></i>
                         <span>Customer Query</span>
@@ -138,9 +140,9 @@
                             <a href="tables-basic.html">List</a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
 
-                <li class="submenu">
+                {{-- <li class="submenu">
                     <a id="tables" href="#">
                         <i class="fas fa-copyright"></i>
                         <span>Coupon</span>
@@ -154,9 +156,9 @@
                             <a href="tables-datatable.html">Add New</a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
 
-                <li class="submenu">
+                {{-- <li class="submenu">
                     <a id="tables" href="#">
                         <i class="fas fa-truck"></i>
                         <span>Delivery Charge</span>
@@ -170,9 +172,9 @@
                             <a href="tables-datatable.html">Add New</a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
 
-                <li class="submenu">
+                {{-- <li class="submenu">
                     <a id="tables" href="#">
                         <i class="fas fa-thermometer-three-quarters"></i>
                         <span>System Status</span>
@@ -186,9 +188,9 @@
                             <a href="tables-datatable.html">Add New</a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
 
-                <li class="submenu">
+                {{-- <li class="submenu">
                     <a id="tables" href="#">
                         <i class="fas fa-blog"></i>
                         <span>System Log</span>
@@ -199,7 +201,7 @@
                             <a href="tables-basic.html">List</a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
 
                 <li class="submenu">
                     <a id="tables" href="#">
@@ -227,7 +229,7 @@
                     </ul>
                 </li>
 
-                <li class="submenu">
+                {{-- <li class="submenu">
                     <a id="tables" href="#">
                         <i class="fas fa-cog"></i>
                         <span>Settings</span>
@@ -238,7 +240,7 @@
                             <a href="tables-basic.html">Update Settings</a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
 
                 <li class="submenu">
                     <li class="submenu">

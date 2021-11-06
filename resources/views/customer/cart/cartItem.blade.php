@@ -24,9 +24,9 @@
    <!-- start account area -->
    <section class="cart-page cart-detail">
     <div class="container">
+        @include('message.message')
         <div class="row">
             <div class="col-lg-12">
-                <form action="#!">
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
@@ -64,10 +64,10 @@
                                     <td class="pro-price"><p>{{number_format($carts->price)}}</p></td>
                                     <td class="pro-quantity">
                                         <div class="d-flex number-spinner justify-content-center">
-                                            <input type="text" class="form-control text-center input-value" value="{{$carts->quantity}}">
+                                            <input type="text" id="input-quantity-{{$carts->id}}" name="qty" class="form-control text-center input-value" value="{{$carts->quantity}}" id="cart_qty">
                                             <div class="buttons">
-                                                <button data-dir="up" class="up-btn"><i class="flaticon-plus"></i></button>
-                                                <button data-dir="dwn" class="down-btn"><i class="flaticon-remove"></i></button>
+                                                <button onclick="qtyUp({{$carts->id}})" id="qty_up" data-dir="up" class="up-btn"><i class="flaticon-plus"></i></button>
+                                                <button onclick="qtyDown({{$carts->id}})" id="qty_down" data-dir="dwn" class="down-btn"><i class="flaticon-remove"></i></button>
                                             </div>
                                         </div>
                                     </td>
@@ -85,14 +85,16 @@
                         </table>
                     </div>
                     <div class="coupon-area d-flex justify-content-between">
-                        <div class="coupon-input">
-                            <input type="text" placeholder="coupon code" class="inputs">
-                            <button class="button-style1">apply coupon <span class="btn-dot"></span></button>
-                        </div>
-                        <button type="submit" class="button-style1">update cart <span class="btn-dot"></span></button>
+                        <form method="post" action="{{route('cart.coupon')}}">
+                            @csrf 
+                            <div class="coupon-input">
+                                <input type="text" placeholder="coupon code" class="inputs" name="coupon_code">
+                                <button class="button-style1">apply coupon <span class="btn-dot"></span></button>
+                            </div>
+                       </form>
+                        <button type="button" class="button-style1">update cart <span class="btn-dot"></span></button>
                     </div>
-                </form>
-            </div>
+              </div>
         </div>
     </div>
 </section>
@@ -107,14 +109,19 @@
                     <div class="title text-center">
                         <h5>cart total</h5>
                     </div>
+
                     <div class="sub d-flex justify-content-between">
                         <p>Subtotal:</p>
                         <p>Tk {{number_format($subTotal)}}</p>
                     </div>
+                    <div class="sub d-flex justify-content-between">
+                        <p>Discount:</p>
+                        <p>Tk {{number_format($coupon)}}</p>
+                    </div>
                     <div class="checkout">
                         <div class="d-flex justify-content-between">
                             <h5>total</h5>
-                            <p>£220.00</p>
+                            <p>Tk {{number_format($subTotal-$coupon)}}</p>
                         </div>
                         <a href="{{route('customer.checkout')}}" class="button-style1">checkout <span class="btn-dot"></span></a>
                     </div>
@@ -123,6 +130,31 @@
         </div>
     </div>
 </section>
+
+<script>
+ function qtyUp(id){  
+    var qty = $("#input-quantity-"+id).val();
+    var qtyPerse=parseInt(qty)+1;
+    cartAjax(id,qtyPerse);
+ }
+ function qtyDown(id){
+    var qty = $("#input-quantity-"+id).val();
+    var qtyPerse=parseInt(qty)-1;
+    cartAjax(id,qtyPerse);
+ }
+ function cartAjax(id,qty){
+    $.ajax({
+            type: 'GET',
+            url: 'cart/update/'+id+"/"+qty,
+            success: function (data) {
+                location.reload();
+            },
+            error:function(data){
+             console.log(data);
+            },
+        });
+ }
+</script>
 @endsection
 
 

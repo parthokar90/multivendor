@@ -27,7 +27,6 @@
                                 <thead>
                                     <tr>
                                         <th>Sl</th>
-                                        <th>Vendor</th>
                                         <th>Customer</th>
                                         <th>Mobile</th>
                                         <th>Email</th>  
@@ -51,7 +50,6 @@
           ajax: "{{ route('order.page') }}",
           columns: [
               {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-              {data: 'vendor', name: 'vendor'},
               {data: 'customer', name: 'customer'},
               {data: 'mobile', name: 'mobile'},
               {data: 'email', name: 'email'},

@@ -43,6 +43,11 @@ class HomePageService{
         return $this->HomepageRepository->productReview($request,$productid);
     }
 
+    //cart coupon repository service
+    public function cartCoupon($request){
+        return $this->HomepageRepository->cartCoupon($request);
+    }
+
     //all active brand repository service
     public function allBrand(){
         return $this->HomepageRepository->allBrand();
@@ -83,8 +88,18 @@ class HomePageService{
         return $this->HomepageRepository->cart($request);
     }
 
+     //checkout  method repository service
+     public function checkout(){
+        return $this->HomepageRepository->checkout();
+    }
+
     //cart delete method repository service
     public function cartDelete($id){
         return $this->HomepageRepository->cartDelete($id);
+    }
+
+    //place order method repository service
+    public function orderPlaced($request){
+        return $this->HomepageRepository->orderPlaced($request);
     }
 }

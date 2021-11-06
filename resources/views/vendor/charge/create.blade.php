@@ -21,7 +21,7 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <div class="card mb-3">
                 <div class="card-body">
-
+                    @include('admin.include.message')
                     <form method="post" action="{{route('delivery-charge.store')}}">
                         @csrf 
                         <div class="form-group">

@@ -47,7 +47,7 @@ class Product extends Model
      //this function shows product multiple attribute type
     public function productAttributeType($id){
         return ProductAttribute::where('product_id',$id)
-      ->where('product_attributes.status',1)
+      ->where('product_attributes.status',7)
       ->leftjoin('attributes','attributes.id','=','product_attributes.type_id')
       ->groupBy('product_attributes.type_id')
       ->get();
@@ -85,7 +85,9 @@ class Product extends Model
 
     //this function show product review in single product page
     public function productReview($id){
-        return ProductReview::where(['product_id'=>$id,'status'=>1])->get();
+        return ProductReview::where(['product_id'=>$id,'product_reviews.status'=>1])
+        ->leftjoin('users','users.id','=','product_reviews.user_id')
+        ->get();
     }
 
     //this function show product review count in single product page

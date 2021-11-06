@@ -21,27 +21,19 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <div class="card mb-3">
                 <div class="card-body">
-
                     <form method="post" action="{{route('delivery-charge.update',$DeliveryCharge->id)}}">
                         @csrf 
                         {{method_field('PATCH')}}
                         <div class="form-group">
-                            <label>District</label>
-                            <select class="form-control" name="district_id" required>
-                                @foreach($district as $dist)
-                                  <option value="{{$dist->id}}">{{$dist->district_name}}</option>
-                                @endforeach 
-                            </select>
+                            <label>District</label><br>
+                            {{$district->district_name}}
                         </div>
                         <div class="form-group">
                             <label>Amount</label>
                             <input type="number" name="amount" value="{{$DeliveryCharge->amount}}" class="form-control" required>
                         </div>
-                        <button type="submit" class="btn btn-success">Add</button>
+                        <button type="submit" class="btn btn-success">Update</button>
                     </form>
-                   
-
-
                   </div>
              </div>
         </div>

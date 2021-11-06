@@ -23,18 +23,20 @@
                 <div class="card-body">
                        @include('admin.include.message')
                        <div class="table-responsive">
-                        <table class="datatable table table-bordered table-hover display">
-                            <thead>
-                                <tr>
-                                    <th>Sl</th>
-                                    <th>Product</th>
-                                    <th>Image</th>
-                                    <th>Status</th> 
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
+                            <table class="datatable table  table-hover display">
+                                <thead>
+                                    <tr>
+                                        <th>Sl</th>
+                                        <th>Product</th>
+                                        <th>Image</th>
+                                        <th>Shop</th>  
+                                        <th>Brand</th>  
+                                        <th>Status</th>  
+                                        <th>Action</th> 
+                                    </tr>
+                                </thead>
+                            </table>
+                       </div>
                   </div>
              </div>
         </div>
@@ -45,18 +47,19 @@
       var table = $('.datatable').DataTable({
           processing: true,
           serverSide: true,
-          ajax: "{{ route('product.index') }}",
+          ajax: "{{ route('admin.product.index') }}",
           columns: [
               {data: 'DT_RowIndex', name: 'DT_RowIndex'},
               {data: 'product_name', name: 'product_name'},
               {data: 'image', name: 'image'},
+              {data: 'shop', name: 'shop'},
+              {data: 'brand', name: 'brand'},
               {data: 'status', name: 'status'},
               {
                   data: 'action', 
                   name: 'action', 
                   orderable: true, 
                   searchable: true,
-                  responsive: true
               },
           ]
       });

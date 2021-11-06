@@ -51,19 +51,15 @@
                                         <div class="action">
                                             <ul>
                                                 <li>
-                                                    <form method="post" action="{{route('wishlist.store')}}">
-                                                        @csrf 
-                                                        <input type="hidden" name="id" value="{{$item->id}}">
-                                                        <button type="submit">
+                                                    <a href="{{route('add.wishlist',$item->id)}}">
                                                         <i class="far fa-heart"></i>
                                                         <p class="my-tooltip">
                                                             add to wishlist
                                                         </p>
-                                                      </button>
-                                                    </form>
+                                                    </a>
                                                 </li>
                                                 <li>
-                                                    <a href="#!" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                    <a href="{{route('product.single',array('id'=>$item->id,'slug'=>$item->product_slug))}}">
                                                         <i class="far fa-eye"></i>
                                                         <p class="my-tooltip">
                                                             quick view
@@ -75,16 +71,14 @@
                                     </div>
                                     <div class="bottom-area">
                                         <ul class="rating d-flex">
+                                            @for($i=0;$i<$item->averageRating($item->id);$i++)
                                             <li><i class="fas fa-star"></i></li>
-                                            <li><i class="fas fa-star"></i></li>
-                                            <li><i class="fas fa-star"></i></li>
-                                            <li><i class="fas fa-star"></i></li>
-                                            <li><i class="fas fa-star"></i></li>
+                                           @endfor
                                         </ul>
                                         <a href="{{route('product.single',array('id'=>$item->id,'slug'=>$item->product_slug))}}">
                                             <h5>{{$item->product_name}}</h5>
                                         </a>
-                                        <p><span>$110</span> - $78</p>
+                                      
                                         <a href="{{route('product.single',array('id'=>$item->id,'slug'=>$item->product_slug))}}" class="add-cart button-style1">read more <span class="btn-dot"></span></a>
                                     </div>
                                 </div>

@@ -11,6 +11,7 @@ use App\Traits\CommonTrait;
 use App\Models\vendor\Shop;
 use App\Models\vendor\Product;
 use App\Models\customer\Order;
+use App\Models\customer\OrderItem;
 use Illuminate\Support\Str;
 
 
@@ -27,11 +28,11 @@ class DashboardController extends Controller
     //vendor dashboard
     public function index(){
         $totalProduct=Product::where('vendor_id',auth()->user()->id)->count();
-        $todayOrder=Order::where(['vendor_id'=>auth()->user()->id,'order_date'=>date('Y-m-d')])->count();
-        $totalOrder=Order::where('vendor_id',auth()->user()->id)->count();
+        $todayOrder=OrderItem::where('vendor_id',auth()->user()->id)->whereDate('created_at',date('Y-m-d'))->count();
+        $totalOrder=OrderItem::where('vendor_id',auth()->user()->id)->count();
         $totalShop=Shop::where('vendor_id',auth()->user()->id)->count();
-        $todayPending=Order::where(['vendor_id'=>auth()->user()->id,'status_id'=>1,'order_date'=>date('Y-m-d')])->count();
-        $totalPending=Order::where(['vendor_id'=>auth()->user()->id,'status_id'=>1])->count();
+        $todayPending=OrderItem::where(['vendor_id'=>auth()->user()->id,'status_id'=>1])->whereDate('created_at',date('Y-m-d'))->count();
+        $totalPending=OrderItem::where(['vendor_id'=>auth()->user()->id,'status_id'=>1])->count();
         return view('vendor.dashboard',compact('totalProduct','todayOrder','totalOrder','totalShop','todayPending','totalPending'));
     }
 
@@ -67,6 +68,12 @@ class DashboardController extends Controller
            $pass=Hash::make($request->password);
          }
 
+         if($request->status==''){
+           $status=$vendor->status;
+         }else{
+          $status=$request->status;
+         }
+
          $vendor->first_name=$request->first_name;
 
          $vendor->last_name=$request->last_name;
@@ -93,7 +100,7 @@ class DashboardController extends Controller
 
          $vendor->created_by=auth()->user()->id;
 
-         $vendor->status=$request->status;
+         $vendor->status=$status;
      
          $vendor->save();
 
@@ -117,6 +124,12 @@ class DashboardController extends Controller
                 $banner_name= $shop->shop_banner;
             } 
 
+            if($request->shop_status==''){
+              $shop_status=$shop->status;
+            }else{
+              $shop_status=$request->shop_status;
+            }
+
          $shop->shop_name=$request->shop_name;
 
          $shop->logo=$logo_name;
@@ -131,7 +144,7 @@ class DashboardController extends Controller
 
          $shop->created_by=auth()->user()->id;
 
-         $shop->status=$request->shop_status;
+         $shop->status=$shop_status;
 
          $shop->save();
 

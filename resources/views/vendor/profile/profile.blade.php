@@ -128,7 +128,9 @@
                                                 </div>
 
                                                 <div class="col-lg-6">
-                                                    <label>Status:</label>
+
+                                                    @if(Auth::guard('admin')->check())
+                                                    <label>Account Status:</label>
                                                     <select class="form-control" name="status">
                                                            @if($vendor->status==1)
                                                             <option value="1" selected>Active</option>
@@ -138,6 +140,10 @@
                                                             <option value="0" selected>Inactive</option>
                                                            @endif  
                                                     </select>
+                                                    @else 
+                                                    <label>Account Status:</label><br>
+                                                    @if($vendor->status==1) Active @else Inactive @endif
+                                                    @endif 
                                                 </div>
     
                                                 <div class="col-lg-12">
@@ -172,7 +178,8 @@
                                             </div>
 
                                             <div class="col-lg-6">
-                                                <label>Status:</label>
+                                                @if(Auth::guard('admin')->check())
+                                                <label>Shop Status:</label>
                                                 <select class="form-control" name="shop_status">
                                                        @if(optional($vendor->shops)->status==1)
                                                         <option value="1" selected>Active</option>
@@ -182,6 +189,10 @@
                                                         <option value="0" selected>Inactive</option>
                                                        @endif  
                                                 </select>
+                                                @else 
+                                                <label>Shop Status:</label><br>
+                                                @if(optional($vendor->shops)->status==1) Active @else Inactive @endif
+                                                @endif
                                             </div>
 
                                             <div class="col-lg-12">

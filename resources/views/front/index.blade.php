@@ -167,10 +167,10 @@
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a href="#!" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                            <a href="{{route('product.single',array('id'=>$topCatPros->id,'slug'=>$topCatPros->product_slug))}}">
                                                                 <i class="far fa-eye"></i>
                                                                 <p class="my-tooltip">
-                                                                    quick view
+                                                                    view
                                                                 </p>
                                                             </a>
                                                         </li>
@@ -192,176 +192,6 @@
                                     @empty
                                     <p>No Product Found</p>
                                    @endforelse
-                                </div>
-                            </div>
-                            <!-- trending -->
-                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                <div class="row">          
-      
-                                    <div class="col-lg-3 col-md-4 col-sm-6">
-                                        <div class="single-item">
-                                            <div class="image-area">
-                                                <a href="shop-detail-left.html">
-                                                    <img src="{{asset('front/assets/images/home1/product/p7a.jpg')}}" class="img-active" alt="Product Image"/>
-                                                </a>
-                                                <a href="shop-detail-left.html">
-                                                    <img src="{{asset('front/assets/images/home1/product/p7b.jpg')}}" class="img-hover" alt="Product Image"/>
-                                                </a>
-                                                <span class="sale-status">sale</span>
-                                                <div class="action">
-                                                    <ul>
-                                                        <li>
-                                                            <a href="wishlist.html">
-                                                                <i class="far fa-heart"></i>
-                                                                <p class="my-tooltip">
-                                                                    add to wishlist
-                                                                </p>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#!" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                                                <i class="far fa-eye"></i>
-                                                                <p class="my-tooltip">
-                                                                    quick view
-                                                                </p>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="cart.html">
-                                                                <i class="flaticon-shopping-cart"></i>
-                                                                <p class="my-tooltip">
-                                                                    add to cart
-                                                                </p>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="compare.html">
-                                                                <i class="fas fa-sync-alt"></i>
-                                                                <p class="my-tooltip">
-                                                                    compare
-                                                                </p>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="size">
-                                                    <ul class="d-flex">
-                                                        <li>
-                                                            <a href="#!">s</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#!">m</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#!">l</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#!">xl</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="bottom-area">
-                                                <ul class="rating d-flex">
-                                                    <li><i class="fas fa-star"></i></li>
-                                                    <li><i class="fas fa-star"></i></li>
-                                                    <li><i class="fas fa-star"></i></li>
-                                                    <li><i class="fas fa-star"></i></li>
-                                                    <li><i class="fas fa-star"></i></li>
-                                                </ul>
-                                                <a href="shop-detail-left.html">
-                                                    <h5>Faux suede bomber jacket</h5>
-                                                </a>
-                                                <p><span>$110</span> - $78</p>
-                                                <a href="#!" class="add-cart button-style1">add to cart <span class="btn-dot"></span></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- new arrival -->
-                            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                                <div class="row">
-                                
-                                    <div class="col-lg-3 col-md-4 col-sm-6">
-                                        <div class="single-item">
-                                            <div class="image-area">
-                                                <a href="shop-detail-left.html">
-                                                    <img src="{{asset('front/assets/images/home1/product/p7a.jpg')}}" class="img-active" alt="Product Image"/>
-                                                </a>
-                                                <a href="shop-detail-left.html">
-                                                    <img src="{{asset('front/assets/images/home1/product/p7b.jpg')}}" class="img-hover" alt="Product Image"/>
-                                                </a>
-                                                <span class="sale-status">sale</span>
-                                                <div class="action">
-                                                    <ul>
-                                                        <li>
-                                                            <a href="wishlist.html">
-                                                                <i class="far fa-heart"></i>
-                                                                <p class="my-tooltip">
-                                                                    add to wishlist
-                                                                </p>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#!" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                                                <i class="far fa-eye"></i>
-                                                                <p class="my-tooltip">
-                                                                    quick view
-                                                                </p>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="cart.html">
-                                                                <i class="flaticon-shopping-cart"></i>
-                                                                <p class="my-tooltip">
-                                                                    add to cart
-                                                                </p>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="compare.html">
-                                                                <i class="fas fa-sync-alt"></i>
-                                                                <p class="my-tooltip">
-                                                                    compare
-                                                                </p>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="size">
-                                                    <ul class="d-flex">
-                                                        <li>
-                                                            <a href="#!">s</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#!">m</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#!">l</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#!">xl</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="bottom-area">
-                                                <ul class="rating d-flex">
-                                                    <li><i class="fas fa-star"></i></li>
-                                                    <li><i class="fas fa-star"></i></li>
-                                                    <li><i class="fas fa-star"></i></li>
-                                                    <li><i class="fas fa-star"></i></li>
-                                                    <li><i class="fas fa-star"></i></li>
-                                                </ul>
-                                                <a href="shop-detail-left.html">
-                                                    <h5>oversize cotton dress</h5>
-                                                </a>
-                                                <p><span>$110</span> - $78</p>
-                                                <a href="#!" class="add-cart button-style1">add to cart <span class="btn-dot"></span></a>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -420,9 +250,9 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="#!" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                <a href="{{route('product.single',array('id'=>$featureds->id,'slug'=>$featureds->product_slug))}}">
                                                     <i class="far fa-eye"></i>
-                                                    <p class="my-tooltip">quick view</p>
+                                                    <p class="my-tooltip">view</p>
                                                 </a>
                                             </li>
                                         </ul>
@@ -432,8 +262,7 @@
                                     <a href="{{route('product.single',array('id'=>$featureds->id,'slug'=>$featureds->product_slug))}}">
                                         <h5>{{$featureds->product_name}}</h5>
                                     </a>
-                                    <p><span>$110</span> - $78000</p>
-                                    <ul class="rating d-flex">
+                                    <ul class="rating d-flex mt-3">
                                       @for($i=0;$i<$featureds->averageRating($featureds->id);$i++)
                                         <li><i class="fas fa-star"></i></li>
                                       @endfor 

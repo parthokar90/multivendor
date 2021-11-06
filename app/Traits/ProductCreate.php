@@ -19,9 +19,21 @@ trait ProductCreate{
        }
     }
 
+    //this function update product multiple category
+    public function updateProductcategory($id,$catId){
+       ProductCategory::where('product_id',$id)->delete();
+       for($i=0;$i<count($catId);$i++){
+        $category = new ProductCategory;
+        $category->product_id=$id;
+        $category->category_id=$catId[$i];
+        $category->status=7;
+        $category->save();
+      }
+    }
+
     //this function insert product multiple attribute
-    public function productAttribute($vendorId,$productId){
-       $data = TempAttribute::where('vendor_id',$vendorId)->get();
+    public function productAttribute($vendorId,$productId,$brouser_id){
+       $data = TempAttribute::where('vendor_id',$vendorId)->where('brouser_id',$brouser_id)->get();
        foreach($data as $item){
          $store = new ProductAttribute;
          $store->product_id=$productId;

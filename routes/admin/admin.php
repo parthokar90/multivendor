@@ -9,6 +9,7 @@ use App\Http\Controllers\admin\AttributeController;
 use App\Http\Controllers\admin\VendorController;
 use App\Http\Controllers\admin\CustomerController;
 use App\Http\Controllers\admin\OrderController;
+use App\Http\Controllers\admin\ProductController;
 
 
 //login route start
@@ -19,6 +20,12 @@ use App\Http\Controllers\admin\OrderController;
 //dashboard route start
   Route::get('admin/dashboard', [DashboardController::class,'index'])->name('admin.dashboard');
 //dashboard route end
+
+//product route start
+  Route::get('admin/product/list', [ProductController::class,'index'])->name('admin.product.index');
+  Route::get('admin/product/edit/{id}', [ProductController::class,'edit'])->name('admin.product.edit');
+  Route::post('admin/product/update/{id}', [ProductController::class,'update'])->name('admin.product.update');
+//product route end
 
 //category route start
   Route::resource('categories',CategoryController::class);

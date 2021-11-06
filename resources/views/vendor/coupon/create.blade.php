@@ -25,12 +25,16 @@
                     <form method="post" action="{{route('coupon.store')}}">
                         @csrf 
                         <div class="form-group">
+                            <label>Coupon</label>
+                            <input type="text" name="coupon_code" class="form-control" required>
+                        </div>
+                        <div class="form-group">
                             <label>Amount</label>
                             <input type="number" name="amount" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label>Expire Date</label>
-                            <input type="date" name="expire_date" class="form-control" required>
+                            <input type="date" name="expire_date" value="{{date('Y-m-d')}}" class="form-control" required>
                         </div>
                         <button type="submit" class="btn btn-success">Add</button>
                     </form>

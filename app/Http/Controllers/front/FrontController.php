@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\front;
 use App\Services\Front\HomePageService;
 use App\Http\Controllers\Controller;
+use App\Models\Vendor\Product;
 use Illuminate\Http\Request;
 
 
@@ -78,7 +79,5 @@ class FrontController extends Controller
     public function blogSingle($id){
       return $this->HomePageService->blogSingle($id);
     }
-
-    
 
 }

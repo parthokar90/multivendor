@@ -38,6 +38,9 @@ use App\Http\Controllers\vendor\ReportController;
   Route::post('temp/product/attribute',[ProductController::class,'tempAttribute'])->name('product.temp.attribute');
   Route::get('list/attribute/',[ProductController::class,'getTempAttribute'])->name('list.attribute');
   Route::get('delete/attribute/{id}',[ProductController::class,'deleteAttribute']);
+  Route::get('delete/attribute/product/{id}',[ProductController::class,'deleteAttributePro']);
+  Route::get('edit/attribute/product/{id}',[ProductController::class,'editAttributePro']);
+  Route::post('update/attribute/product/',[ProductController::class,'updateAttributePro'])->name('up_att_pro');
 //product route end
 
 
@@ -47,6 +50,7 @@ use App\Http\Controllers\vendor\ReportController;
 
 //order route start
   Route::resource('orders',OrderController::class);
+  Route::post('orders-status-update/{orderid}',[OrderController::class,'statusUpdate'])->name('order_status_update');
 //order route end
 
 //delivery charge route start

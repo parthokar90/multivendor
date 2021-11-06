@@ -8,7 +8,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
-                <h2>checxkout</h2>
+                <h2>checkout</h2>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb justify-content-center">
                       <li class="breadcrumb-item"><a href="{{route('home.page')}}">Home</a></li>
@@ -23,7 +23,9 @@
 <!-- end banner area -->
 
     <!-- start checkout area -->
-    <section class="checkout-page checkout">
+    <form method="post" action="{{route('customer.order.placed')}}">
+        @csrf 
+    <section class="checkout-page checkout cart-page cart-detail">
         <div class="container">
             <div class="row">
                 <!-- billing -->
@@ -33,74 +35,44 @@
                             <h4>billing details</h4>
                         </div>
                         <div class="row">
-                            <div class="col-lg-6 col-md-6">
-                                <input type="text" placeholder="first name*" class="bill-input" required>
+                            <div class="col-lg-6">
+                                <label>First Name</label>
+                                <input type="text" value="{{auth()->user()->first_name}}" name="auth_ship_first_name" placeholder="first name*" class="bill-input">
                             </div>
-                            <div class="col-lg-6 col-md-6">
-                                <input type="text" placeholder="last name*" class="bill-input" required>
+                            <div class="col-lg-6">
+                                <label>Last Name</label>
+                                <input type="text" value="{{auth()->user()->last_name}}" name="auth_ship_last_name" placeholder="last name*" class="bill-input">
                             </div>
-                            <div class="col-lg-12">
-                                <input type="text" placeholder="company name (optional)" class="bill-input">
+                            <div class="col-lg-6">
+                                <label>City</label>
+                                <input type="text" value="{{auth()->user()->city}}" name="auth_ship_city" placeholder="town/city*" class="bill-input">
                             </div>
-                            <div class="col-lg-12">
-                                <select class="bill-input select">
-                                    <option value="1">Bangladesh</option>
-                                    <option value="2">United State</option>
-                                    <option value="3">London</option>
-                                    <option value="4">Canada</option>
-                                    <option value="5">India</option>
-                                    <option value="5">South Africa</option>
-                                    <option value="5">Dubai</option>
-                                    <option value="5">Albania</option>
+                            <div class="col-lg-6">
+                                <label>Country</label>
+                                <select class="bill-input select" name="auth_ship_country">
+                                    @foreach($country as $c)
+                                    <option value="{{$c->id}}">{{$c->country_name}}</option>
+                                    @endforeach 
                                 </select>
                             </div>
-                            <div class="col-lg-12">
-                                <input type="text" placeholder="street address*" class="bill-input" required>
-                            </div>
-                            <div class="col-lg-12">
-                                <input type="text" placeholder="apparments*" class="bill-input" required>
+                            <div class="col-lg-6">
+                                <label>District</label>
+                                <select class="bill-input select" name="auth_ship_district">
+                                    @foreach($district as $d)
+                                    <option value="{{$d->id}}">{{$d->district_name}}</option>
+                                    @endforeach 
+                                </select>
                             </div>
                             <div class="col-lg-6">
-                                <input type="text" placeholder="town/city*" class="bill-input" required>
-                            </div>
-                            <div class="col-lg-6">
-                                <input type="text" placeholder="state/country*" class="bill-input" required>
-                            </div>
-                            <div class="col-lg-6">
-                                <input type="number" placeholder="post code*" class="bill-input" required>
-                            </div>
-                            <div class="col-lg-6">
-                                <input type="tel" placeholder="phone*" class="bill-input" required>
+                                <label>Post Code</label>
+                                <input type="number" placeholder="post code*" class="bill-input" name="auth_ship_zipcode">
                             </div>
                             <div class="col-lg-12">
-                                <input type="email" placeholder="email address*" class="bill-input" required>
+                                <label>Mobile</label>
+                                <input type="tel" value="{{auth()->user()->mobile}}" name="auth_ship_phone" placeholder="phone*" class="bill-input">
                             </div>
                         </div>
                         <div class="create">
-                            <!-- card 1 -->
-                            <div class="accordion-item">
-                                <div class="accordion-header" id="headingOne">
-                                    <h5 class="mb-0">
-                                        <label for="term1" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                            Create an Account    
-                                            <input type="checkbox" class="check" id="term1">
-                                            <span class="check-custom"></span>
-                                        </label>
-                                    </h5>
-                                </div>
-                                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                            <input type="password" placeholder="password" class="bill-input">
-                                            </div>
-                                            <div class="col-lg-12">
-                                            <input type="password" placeholder="confirm password" class="bill-input">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             <!-- card 2 -->
                             <div class="accordion-item">
                                 <div class="accordion-header" id="headingTwo">
@@ -116,31 +88,41 @@
                                     <div class="accordion-body">
                                         <div class="row">
                                             <div class="col-lg-6">
-                                                <input type="text" placeholder="first name*" class="bill-input" required>
+                                                <label>First Name</label>
+                                                <input type="text" name="ship_first_name" placeholder="first name*" class="bill-input">
                                             </div>
                                             <div class="col-lg-6">
-                                                <input type="text" placeholder="last name*" class="bill-input" required>
+                                                <label>Last Name</label>
+                                                <input type="text" name="ship_last_name" placeholder="last name*" class="bill-input">
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <label>City</label>
+                                                <input type="text" name="ship_city" placeholder="town/city*" class="bill-input">
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <label>Country</label>
+                                                <select class="bill-input select" name="ship_country">
+                                                    @foreach($country as $c)
+                                                    <option value="{{$c->id}}">{{$c->country_name}}</option>
+                                                    @endforeach 
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <label>District</label>
+                                                <select class="bill-input select" name="ship_district">
+                                                    <option value="">Select</option>
+                                                    @foreach($district as $d)
+                                                    <option value="{{$d->id}}">{{$d->district_name}}</option>
+                                                    @endforeach 
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <label>Post Code</label>
+                                                <input type="number" placeholder="post code*" class="bill-input" name="ship_zipcode">
                                             </div>
                                             <div class="col-lg-12">
-                                                <input type="text" placeholder="company name (optional)" class="bill-input">
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <input type="text" placeholder="street address*" class="bill-input" required>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <input type="text" placeholder="apparments*" class="bill-input" required>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <input type="text" placeholder="town/city*" class="bill-input" required>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <input type="text" placeholder="state/country*" class="bill-input" required>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <input type="number" placeholder="post code*" class="bill-input" required>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <input type="tel" placeholder="phone*" class="bill-input" required>
+                                                <label>Mobile</label>
+                                                <input type="tel" name="ship_phone" placeholder="phone*" class="bill-input">
                                             </div>
                                         </div>
                                     </div>
@@ -149,7 +131,7 @@
                         </div>
                         <!-- notes -->
                         <div class="notes">
-                            <textarea class="bill-input" placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
+                            <textarea name="ship_note" class="bill-input" placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
                         </div>
                     </div>
                 </div>
@@ -161,52 +143,43 @@
                         </div>
                         <div class="sub d-flex justify-content-between">
                             <p>Subtotal:</p>
-                            <p>£220</p>
+                            <p>Tk {{number_format($subTotal)}}</p>
                         </div>
                         <div class="ship">
-                            <p>Shipping:</p>
                             <div class="d-flex justify-content-between">
-                                <p>Free Shipping</p>
-                                <p>£0.00</p>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <p>Standard</p>
-                                <p>£20.00</p>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <p>Express</p>
-                                <p>£10.00</p>
+                                <p>Coupon</p>
+                                <p>Tk {{number_format($coupon)}}</p>
                             </div>
                         </div>
                         <div class="checkout">
                             <div class="total d-flex justify-content-between">
                                 <h5>total</h5>
-                                <p>£220.00</p>
+                                <p>Tk {{$subTotal-$coupon}}</p>
                             </div>
                             <label class="input-container">
                                 <span>Direct Bank Transfer</span>
-                                <input type="radio" name="radio" checked>
+                                <input type="radio" name="payment_type" value="1" checked>
                                 <span class="checkmark"></span>
                             </label>
                             <label class="input-container">
                                 <span>Check Payments</span>
-                                <input type="radio" name="radio">
+                                <input type="radio" name="payment_type" value="2">
                                 <span class="checkmark"></span>
                             </label>
                             <label class="input-container">
                                 <span>Cash on Delivery</span>
-                                <input type="radio" name="radio">
+                                <input type="radio" name="payment_type" value="3">
                                 <span class="checkmark"></span>
                             </label>
-                            <a href="checkout.html" class="button-style1">proceed to checkout <span class="btn-dot"></span></a>
+                            <button type="submit" style="width:100%;padding:10px 0;" class="button-style1">Place Order <span class="btn-dot"></span></button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    </form>
     <!-- end checkout area -->
-
 @endsection
 
 

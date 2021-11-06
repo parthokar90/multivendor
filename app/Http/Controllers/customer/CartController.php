@@ -5,6 +5,9 @@ namespace App\Http\Controllers\customer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\Front\HomePageService;
+use App\Models\customer\ProductCart;
+
+
 
 class CartController extends Controller
 {
@@ -26,16 +29,6 @@ class CartController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -46,38 +39,19 @@ class CartController extends Controller
         return $this->HomePageService->cart($request);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+
+    //for customer cart update
+    public function cartUpdate($id,$qty){
+        $cart=ProductCart::findOrFail($id);
+        $cart->quantity=$qty;
+        $cart->sub_total=$cart->price*$qty;
+        $cart->save();
+        return response()->json($cart);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+    //for customer coupon
+    public function cartCoupon(Request $request){
+        return $this->HomePageService->cartCoupon($request);
     }
    
     /**

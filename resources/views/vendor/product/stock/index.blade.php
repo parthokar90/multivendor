@@ -55,7 +55,7 @@
                                                     <div>{{$value->quantity}} pcs</div>
                                                 @endforeach
                                              @endif</td>  
-                                        <td><a class="btn btn-primary btn-sm" title="Edit Product" href="'.route('products.edit',$item->id).'"> <i class="fa fa-edit"></i></a></td> 
+                                        <td><a class="btn btn-primary btn-sm" title="Edit Product" href="{{route('products.edit',$item->id)}}"> <i class="fa fa-edit"></i></a></td> 
                                     </tr>
                                     @empty
                                     <p>No Product Found</p>

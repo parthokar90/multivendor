@@ -26,12 +26,15 @@ use App\Http\Controllers\customer\CheckoutController;
 
 //cart route start
   Route::resource('cart',CartController::class);
+  Route::get('cart/update/{id}/{qty}',[CartController::class,'cartUpdate']);
   Route::get('cart/item/delete/{id}',[CartController::class,'delete'])->name('item.delete');
+  Route::post('cart/coupon',[CartController::class,'cartCoupon'])->name('cart.coupon');
 //cart route end
 
 
 //checkout route start
   Route::get('checkout',[CheckoutController::class,'index'])->name('customer.checkout');
+  Route::post('order/place',[CheckoutController::class,'orderPlaced'])->name('customer.order.placed');
 //checkout route end
 
 //wishlist route start

@@ -50,7 +50,6 @@
                
                @foreach($order->orderItem as $key=> $item)
                     @php $details=$item->AttributeDetails($item->attribute_value_id); @endphp
-
                     @if(isset($item->Attribute)) 
                         @php $price=$details->sale_price; @endphp
                             @else 
@@ -61,10 +60,10 @@
                
                
                
-               {{number_format($subTotal)}} Tk @php $subTotals=$subTotal; @endphp</div> 
-               <div><b>(-)Coupon:</b>@if(isset($order->coupon->type)) @if($order->coupon->type==1) {{optional($order->coupon)->amount}} %  @php $couponAmount=$subTotals/100*$order->coupon->amount; @endphp  @else {{number_format(optional($order->coupon)->amount)}} Tk @php $couponAmount=$subTotals-$order->coupon->amount; @endphp  @endif  @endif</div> 
-               <div><b>(+)Delivery Charge:</b> {{number_format(optional($order->deliveryCharge)->amount)}} Tk </div> 
-               <div><b>Grand Total:</b> {{number_format($subTotals-$couponAmount+$order->deliveryCharge->amount)}} Tk</div> 
+               Tk {{number_format($subTotal)}}  @php $subTotals=$subTotal; @endphp</div> 
+               <div><b>(-)Coupon:</b> Tk {{$order->coupon($order->id)}}</div> 
+               <div><b>(+)Delivery Charge:</b> Tk {{$order->deliveryCharge($order->id)}}</div> 
+               <div><b>Grand Total:</b> Tk {{number_format($subTotals+$order->deliveryCharge($order->id)-$order->coupon($order->id))}}</div> 
                <div><b>Status:</b> {{optional($order->status)->status_name}} </div> 
             </div>
         </div>
@@ -78,12 +77,37 @@
                <div><b>Address:</b> {{$order->ship_address}} </div> 
                <div><b>Location:</b> {{$order->ship_location}} </div> 
                <div><b>Country:</b> {{optional($order->shippingCountry)->country_name}} </div> 
-               <div><b>District:</b> {{optional($order->shippingDistrict)->district_name}} </div> 
+               <div><b>District:</b> {{$order->ship_district}} </div> 
                <div><b>City:</b> {{$order->ship_city}} </div> 
-               <div><b>Zipcode:</b> {{optional($order->shippingZipcode)->post_code}} </div> 
+               <div><b>Zipcode:</b> {{$order->ship_zipcode}} </div> 
             </div>
         </div>
+        @if($order->status_id!=4)
+        <form method="post" action="{{route('order_status_update',$order->id)}}">
+          @csrf 
+          <div class="form-group">
+            <label>Change Order Status</label>
+            <select class="form-control" name="status_id">
+              @if($order->status_id==1)
+              <option value="2" selected>Processing</option>
+              <option value="3">Delivered</option>
+              <option value="4">Cancelled</option>
+              @endif
+              @if($order->status_id==2)
+              <option value="3" selected>Delivered</option>
+              <option value="4">Cancelled</option>
+              @endif
+              @if($order->status_id==3)
+              <option value="4">Cancelled</option>
+              @endif
+            </select>
+            <button type="submit" class="btn btn-info">Update</button>
+          </div>
+        </form>
+         @endif
       </div>
+
+ 
 
       <div class="col-xl-12 col-12">
         @include('admin.include.message')
@@ -91,9 +115,9 @@
         <hr>
         <div class="card">
             <div class="card-body">
+              @if($order->status_id!=4)
                 <div class="table-responsive">
                 <table class="table table-bordered">
-
                    <tr>
                        <th>Sl</th>
                        <th>Shop</th>
@@ -144,12 +168,11 @@
                           @endif
                       </td>
                       <td>{{$item->quantity}} pcs</td>
-                      <td>{{number_format($price*$item->quantity)}} Tk</td>
+                      <td> Tk {{number_format($price*$item->quantity)}} </td>
 
-                      <form method="post" action="{{route('orders.update',$item->id)}}">
+                      <form method="post" action="{{route('customer.order.update',$item->id)}}">
                           @csrf 
-                          {{@method_field('PATCH')}}
-                      <td><input type="number" name="quantity" min="1" max="{{$stock}}"></td>
+                      <td><input type="number" name="quantity" min="1" max="{{$stock}}" required></td>
                       <td>
                          <button type="submit" name="action" value="minus" class="btn btn-warning"><i class="fa fa-minus"></i></button>
                          <button type="submit" name="action" value="plus" class="btn btn-success text-white"><i class="fa fa-plus"></i></button>
@@ -161,6 +184,9 @@
                     @endforelse
                   </table>
                 </div>
+                @else 
+                Order Cancelled
+                @endif 
             </div>
         </div>
       </div>

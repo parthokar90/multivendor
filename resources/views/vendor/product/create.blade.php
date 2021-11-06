@@ -338,6 +338,7 @@
 
  //attribute add click function
  $("#add_att").click(function(){
+   
     let att_type = $("#attribute_type").val();
     if(att_type===''){
       alert('Select type first');

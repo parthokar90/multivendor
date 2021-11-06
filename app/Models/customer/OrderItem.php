@@ -16,6 +16,7 @@ class OrderItem extends Model
         return $this->belongsTo(Product::class,'product_id');
     }
 
+
     //this function show order product attribute name
     public function Attribute(){
         return $this->belongsTo(AttributeValue::class,'attribute_value_id');

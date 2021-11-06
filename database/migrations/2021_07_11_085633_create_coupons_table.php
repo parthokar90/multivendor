@@ -15,6 +15,7 @@ class CreateCouponsTable extends Migration
     {
         Schema::create('coupons', function (Blueprint $table) {
             $table->id();
+            $table->string('coupon_code',100);
             $table->unsignedBigInteger('vendor_id');
             $table->string('type',50);
             $table->decimal('amount',18,2);

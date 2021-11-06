@@ -3,7 +3,12 @@
 
 @section('content')
      <!-- start banner area -->
-     <section class="inner-page banner" data-img="{{asset('front/assets/images/banner.jpg')}}">
+ <div class="col-lg-12 text-center">
+     @if(isset($shop->shop_banner))
+     <section class="inner-page banner" data-img="{{asset('vendor/shop/banner/'.$shop->shop_banner)}}">
+        @else 
+        <section class="inner-page banner" data-img="{{asset('front/assets/images/banner.jpg')}}">
+     @endif
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -43,10 +48,11 @@
                                 <h4>Filter by price</h4>
                             </div>
                             <div class="price-filter-range">
-                                <form action="#">
+                                <form action="{{route('shop.single',array('id'=>$shop->id,'slug'=>$shop->shop_slug))}}" method="get">
+                                    @csrf 
                                     <div id="slider-range"></div>
                                     <div class="price-range d-flex justify-content-between align-items-center">
-                                        <p>price: <input type="text" id="amount"></p>
+                                        <p>price: <input type="text" id="amount" name="amount"> <input type="hidden" id="amount1" name="amount1"> <input type="hidden" id="amount2" name="amount2"></p>
                                         <button type="submit">filter</button>
                                     </div>
                                 </form>
@@ -95,15 +101,6 @@
                             </ul>
                         </div>
                         <!-- section 5 -->
-                        <div class="section newsletter">
-                            <div class="title">
-                                <h4>newsletter</h4>
-                            </div>
-                            <form action="#!">
-                                <input type="text" placeholder="enter email" class="inputs">
-                                <button type="submit">submit</button>
-                            </form>
-                        </div>
                     </div>
                 </div>
                 <!-- right content -->
@@ -117,11 +114,62 @@
                             </ul>
                         </div>
                         <div class="home1 collection">
-                            <div class="row">
+                         <div class="row">
+                           @if($shopPrice)
+                            
+                           @forelse($shopPrice as $products)
+                           <div class="col-lg-4 col-md-4 col-sm-6">
+                              <div class="single-item">
+                                  <div class="image-area">
+                                      <a href="{{route('product.single',array('id'=>$products->id,'slug'=>$products->product_slug))}}">
+                                          <img src="{{asset('vendor/product/'.$products->image)}}" class="img-active" alt="Product Image"/>
+                                      </a>
+                                      <a href="{{route('product.single',array('id'=>$products->id,'slug'=>$products->product_slug))}}">
+                                          <img src="{{asset('vendor/product/'.$products->image)}}" class="img-hover" alt="Product Image"/>
+                                      </a>
+                                      <span class="sale-status">sale</span>
+                                      <div class="action">
+                                          <ul>
+                                              <li>
+                                                  <a href="{{route('add.wishlist',$products->id)}}">
+                                                      <i class="far fa-heart"></i>
+                                                      <p class="my-tooltip">
+                                                          add to wishlist
+                                                      </p>
+                                                  </a>
+                                              </li>
+                                              <li>
+                                                  <a href="{{route('product.single',array('id'=>$products->id,'slug'=>$products->product_slug))}}">
+                                                      <i class="far fa-eye"></i>
+                                                      <p class="my-tooltip">
+                                                          quick view
+                                                      </p>
+                                                  </a>
+                                              </li>
+                                          </ul>
+                                      </div>
+                                  </div>
+                                  <div class="bottom-area">
+                                      <ul class="rating d-flex">
+                                          @for($i=0;$i<$products->averageRating($products->id);$i++)
+                                          <li><i class="fas fa-star"></i></li>
+                                         @endfor 
+                                      </ul>
+                                      <a href="shop-detail.html">
+                                          <h5>{{$products->product_name}}</h5>
+                                      </a>
+                                      <a href="{{route('product.single',array('id'=>$products->id,'slug'=>$products->product_slug))}}" class="add-cart button-style1">View More <span class="btn-dot"></span></a>
+                                  </div>
+                              </div>
+                          </div>
+                            @empty
+                              <p>No Product Found</p>
+                           @endforelse
 
-                             @forelse ($shop->products as $products)
-                             <div class="col-lg-4 col-md-4 col-sm-6">
-                                <div class="single-item">
+                            @else 
+                               @forelse($shop->products as $products)
+                                <div class="col-lg-4 col-md-4 col-sm-6">
+                                  <div class="single-item">
                                     <div class="image-area">
                                         <a href="{{route('product.single',array('id'=>$products->id,'slug'=>$products->product_slug))}}">
                                             <img src="{{asset('vendor/product/'.$products->image)}}" class="img-active" alt="Product Image"/>
@@ -141,18 +189,10 @@
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a href="#!" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                    <a href="{{route('product.single',array('id'=>$products->id,'slug'=>$products->product_slug))}}">
                                                         <i class="far fa-eye"></i>
                                                         <p class="my-tooltip">
                                                             quick view
-                                                        </p>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="compare.html">
-                                                        <i class="fas fa-sync-alt"></i>
-                                                        <p class="my-tooltip">
-                                                            compare
                                                         </p>
                                                     </a>
                                                 </li>
@@ -161,11 +201,9 @@
                                     </div>
                                     <div class="bottom-area">
                                         <ul class="rating d-flex">
+                                            @for($i=0;$i<$products->averageRating($products->id);$i++)
                                             <li><i class="fas fa-star"></i></li>
-                                            <li><i class="fas fa-star"></i></li>
-                                            <li><i class="fas fa-star"></i></li>
-                                            <li><i class="fas fa-star"></i></li>
-                                            <li><i class="fas fa-star"></i></li>
+                                          @endfor 
                                         </ul>
                                         <a href="shop-detail.html">
                                             <h5>{{$products->product_name}}</h5>
@@ -177,6 +215,7 @@
                               @empty
                                 <p>No Product Found</p>
                              @endforelse
+                             @endif
                                 <div class="col-lg-12">
                                     <div class="pages">
                                         <ul class="d-flex justify-content-center">

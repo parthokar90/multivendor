@@ -43,18 +43,12 @@
                         </div> --}}
                     </div>
                     <div class="img-thumb">
-                        <div class="item">
-                            <img src="{{asset('front/assets/images/shop/shop-sm1.jpg')}}" alt="Product">
-                        </div>
-                        {{-- <div class="item">
-                            <img src="{{asset('front/assets/images/shop/shop-sm2.jpg')}}" alt="Product">
-                        </div>
-                        <div class="item">
-                            <img src="{{asset('front/assets/images/shop/shop-sm3.jpg')}}" alt="Product">
-                        </div>
-                        <div class="item">
-                            <img src="{{asset('front/assets/images/shop/shop-sm4.jpg')}}" alt="Product">
-                        </div> --}}
+                        @foreach($gallery as $g)
+                            <div class="item">
+                                <img src="{{asset('vendor/product/gallery/'.$g->image)}}" alt="Product">
+                            </div>
+                       @endforeach 
+         
                     </div>
                 </div>
             </div>
@@ -68,17 +62,16 @@
                     <div class="review-area d-flex align-items-center">
                         <ul class="rating d-flex">
                             <li><i class="fas fa-star"></i></li>
+                            @for($i=0;$i<$product->averageRating($product->id);$i++)
                             <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
+                           @endfor
                         </ul>
                         <p>({{$productReviewCount}} customer review)</p>
                     </div>
 
                     @if($attributeType->count()>0)
                       @else 
-                      <h4>{{number_format($product->sale_price)}} – @if($product->regular_price>0)<span>{{number_format($product->regular_price)}}</span>@endif</h4>
+                      <h4>{{number_format($product->sale_price)}} – @if($product->regular_price>=1)<span>{{number_format($product->regular_price)}}</span>@endif</h4>
                      @endif
                     <p class="desc">{{$product->short_description}}</p>
                     @foreach($product->productAttributeValue as $value)
@@ -155,8 +148,8 @@
                                                   <li><i class="fas fa-star"></i></li>
                                                 @endfor 
                                             </ul>
-                                            <a href="#!"><h5>Kenneth R. Myers</h5></a>
-                                            <a href="#!"><p>{{date('F-d-Y',strtotime($reviews->created_at))}}</p></a>
+                                             <h5>{{$reviews->first_name}} {{$reviews->last_name}}</h5>
+                                            <p>{{date('F-d-Y',strtotime($reviews->created_at))}}</p>
                                             <p>{{$reviews->message}}</p>
                                         </div>
                                     </li>
@@ -174,7 +167,7 @@
                                     <form action="{{route('product.review',$product->id)}}" method="post">
                                         @csrf 
                                         <div class="rating-stars d-flex">
-                                            {{-- <p>give your rating</p> --}}
+                                            <p>give your rating</p>
                                             {{-- <ul id="stars">
                                                 <li class='star' title='Poor' name="rating" data-value='1'>
                                                     <i class='fas fa-star fa-fw'></i>

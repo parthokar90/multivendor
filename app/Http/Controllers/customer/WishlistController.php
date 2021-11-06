@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\customer\ProductWishlist;
 use App\Traits\WishlistTrait;
+use App\Models\vendor\Product;
 
 class WishlistController extends Controller
 {
@@ -49,8 +50,10 @@ class WishlistController extends Controller
         if($count>0){
             ProductWishlist::where(['user_id'=>auth()->user()->id,'product_id'=>$id])->delete();
         }
+        $product=Product::findOrFail($id);
         $store = new ProductWishlist;
         $store->user_id=auth()->user()->id;
+        $store->vendor_id=$product->vendor_id;
         $store->product_id=$id;
         $store->status=1;
         $store->save();
@@ -64,8 +67,10 @@ class WishlistController extends Controller
         if($count>0){
             ProductWishlist::where(['user_id'=>auth()->user()->id,'product_id'=>$id])->delete();
         }
+        $product=Product::findOrFail($id);
         $store = new ProductWishlist;
         $store->user_id=auth()->user()->id;
+        $store->vendor_id=$product->vendor_id;
         $store->product_id=$id;
         $store->status=1;
         $store->save();

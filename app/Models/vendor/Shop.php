@@ -15,8 +15,14 @@ class Shop extends Model
         return $this->hasMany(Product::class,'shop_id');
     } 
 
+
     //count shop product
     public function shopProduct($id){
        return Product::where('shop_id',$id)->count();
+    }
+
+    //this function show average rating
+    public function averageRating($id){
+        return ProductReview::where('product_id',$id)->avg('rating');
     }
 }

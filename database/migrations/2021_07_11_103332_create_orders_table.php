@@ -15,18 +15,20 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('vendor_id');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('coupon_id');
-            $table->unsignedBigInteger('charge_id');
-            $table->text('ship_address');
-            $table->text('ship_location');
-            $table->unsignedBigInteger('ship_country');
-            $table->string('ship_city');
-            $table->unsignedBigInteger('ship_district');
-            $table->unsignedBigInteger('ship_zipcode');
-            $table->unsignedBigInteger('status_id');
-            $table->date('order_date');
+            $table->text('ship_address')->nullable();
+            $table->text('ship_location')->nullable();
+            $table->unsignedBigInteger('ship_country')->nullable();
+            $table->string('ship_city')->nullable();
+            $table->string('ship_first_name')->nullable();
+            $table->string('ship_last_name')->nullable();
+            $table->string('ship_phone')->nullable();
+            $table->text('ship_note')->nullable();
+            $table->unsignedBigInteger('ship_district')->nullable();
+            $table->unsignedBigInteger('ship_zipcode')->nullable();
+            $table->unsignedBigInteger('status_id')->nullable();
+            $table->unsignedBigInteger('payment_type')->nullable();
+            $table->date('order_date')->nullable();
             $table->timestamps();
         });
     }

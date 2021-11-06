@@ -27,6 +27,7 @@
                                 <thead>
                                     <tr>
                                         <th>Sl</th>
+                                        <th>District</th>
                                         <th>Amount</th> 
                                         <th>Action</th> 
                                     </tr>
@@ -46,6 +47,7 @@
           ajax: "{{ route('delivery-charge.index') }}",
           columns: [
               {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+              {data: 'district_name', name: 'district_name'},
               {data: 'amount', name: 'amount'},
               {
                   data: 'action', 

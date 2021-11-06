@@ -10,9 +10,11 @@ use App\Models\customer\OrderItem;
 use App\Models\vendor\Coupon;
 use App\Models\vendor\Vendor;
 use App\Models\vendor\DeliveryCharge;
+use App\Models\customer\OrderCharge;
 use App\Models\admin\Country;
 use App\Models\admin\District;
 use App\Models\admin\PostCode;
+use App\Models\customer\OrderCoupon;
 
 class Order extends Model
 {
@@ -39,13 +41,19 @@ class Order extends Model
     }
 
     //this function show order coupon details
-    public function coupon(){
-        return $this->belongsTo(Coupon::class,'coupon_id');
+    public function coupon($id){
+        return OrderCoupon::where('order_id',$id)
+        ->leftjoin('coupons','coupons.id','=','order_coupons.coupon_id')
+        ->groupBy('order_coupons.vendor_id')
+        ->sum('amount');
     }
 
     //this function show order delivery charge details
-    public function deliveryCharge(){
-        return $this->belongsTo(DeliveryCharge::class,'charge_id');
+    public function deliveryCharge($id){
+        return OrderCharge::where('order_id',$id)
+        ->leftjoin('delivery_charges','delivery_charges.id','=','order_charges.charge_id')
+        ->groupBy('order_charges.vendor_id')
+        ->sum('amount');
     }
 
     //this function show total item of order

@@ -56,13 +56,11 @@ class CouponController extends Controller
      */
     public function store(Request $request)
     {
-        $count = Coupon::where('vendor_id',auth()->user()->id)->where('expire_date',$request->expire_date)->count();
-        if($count>0){
-            Coupon::where('vendor_id',auth()->user()->id)->where('expire_date',$request->expire_date)->delete();
-        }
         $store = new Coupon;
 
         $store->vendor_id=auth()->user()->id;
+
+        $store->coupon_code=$request->coupon_code;
 
         $store->amount=$request->amount;
 
@@ -108,6 +106,8 @@ class CouponController extends Controller
         $store = Coupon::findOrFail($id);
 
         $store->vendor_id=auth()->user()->id;
+
+        $store->coupon_code=$request->coupon_code;
 
         $store->amount=$request->amount;
 

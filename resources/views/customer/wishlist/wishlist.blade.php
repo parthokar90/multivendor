@@ -48,7 +48,7 @@
                                             <form method="post" action="{{route('wishlist.destroy',$item->id)}}">
                                                 @csrf 
                                                 {{method_field('DELETE')}}
-                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                                <button onclick="return confirm('are you sure??')" type="submit" class="btn btn-danger">Delete</button>
                                             </form>
                                         </td>
                                     </tr>

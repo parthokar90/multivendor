@@ -21,19 +21,21 @@ class DeliveryChargeController extends Controller
      */
     public function index(Request $request)
     {
-        $list=DeliveryCharge::where('vendor_id',auth()->user()->id)->orderBy('id','DESC')->get();
+        $list=DeliveryCharge::where('vendor_id',auth()->user()->id)
+        ->leftjoin('districts','districts.id','=','delivery_charges.district_id')
+        ->select('delivery_charges.id as main_id','amount','district_name')
+        ->orderBy('delivery_charges.id','DESC')
+        ->get();
         if ($request->ajax()) {
             return Datatables::of($list)
                 ->addIndexColumn()
 
                    //for action column
                     ->addColumn('action', function($row){
-                     $btn = '<a class="btn btn-primary btn-sm" title="Edit Order" href="'.route('delivery-charge.edit',$row->id).'"> <i class="fa fa-edit"></i></a>';
+                     $btn = '<a class="btn btn-primary btn-sm" title="Edit Order" href="'.route('delivery-charge.edit',$row->main_id).'"> <i class="fa fa-edit"></i></a>';
                      return $btn;
                     })
-
                    ->rawColumns(['action'])
-
                    ->make(true);
               }
         return view('vendor.charge.index',compact('list'));
@@ -60,7 +62,7 @@ class DeliveryChargeController extends Controller
     {
         $count = DeliveryCharge::where('vendor_id',auth()->user()->id)->where('district_id',$request->district_id)->count();
         if($count>0){
-            DeliveryCharge::where('vendor_id',auth()->user()->id)->where('district_id',$request->district_id)->delete();
+           return back()->with('value-error','Select another district,delivery charge already exists in this district');
         }
         $store = new DeliveryCharge;
 
@@ -94,7 +96,7 @@ class DeliveryChargeController extends Controller
      */
     public function edit(DeliveryCharge $DeliveryCharge)
     {
-        $district = District::orderBy('id','DESC')->get();
+        $district = District::where('id',$DeliveryCharge->district_id)->first();
         return view('vendor.charge.edit',compact('district','DeliveryCharge'));
     }
 
@@ -107,15 +109,9 @@ class DeliveryChargeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $count = DeliveryCharge::where('vendor_id',auth()->user()->id)->where('district_id',$request->district_id)->count();
-        if($count>0){
-            DeliveryCharge::where('vendor_id',auth()->user()->id)->where('district_id',$request->district_id)->delete();
-        }
         $store = DeliveryCharge::findOrFail($id);
 
         $store->vendor_id=auth()->user()->id;
-
-        $store->district_id=$request->district_id;
 
         $store->amount=$request->amount;
 

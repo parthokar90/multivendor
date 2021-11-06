@@ -27,9 +27,7 @@
                                 <thead>
                                     <tr>
                                         <th>Sl</th>
-                                        <th>Customer</th>
-                                        <th>Mobile</th>
-                                        <th>Email</th>  
+                                        <th>Invoice</th>  
                                         <th>Order Date</th>  
                                         <th>Status</th>  
                                         <th>Action</th> 
@@ -50,11 +48,9 @@
           ajax: "{{ route('orders.index') }}",
           columns: [
               {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-              {data: 'customer', name: 'customer'},
-              {data: 'mobile', name: 'mobile'},
-              {data: 'email', name: 'email'},
-              {data: 'order_date', name: 'order_date'},
-              {data: 'status', name: 'status'},
+              {data: 'invoice', name: 'invoice'},
+              {data: 'created_at', name: 'created_at'},
+              {data: 'status_name', name: 'status_name'},
               {
                   data: 'action', 
                   name: 'action', 

@@ -16,7 +16,9 @@ use App\Http\Requests\admin\ProductValidate;
 use App\Http\Requests\admin\ProductUpdateRequest;  
 use App\Models\vendor\TempAttribute;
 use App\Models\vendor\ProductAttribute;
+use App\Models\vendor\ProductCategory;
 use App\Models\vendor\ProductGallery;
+use Session;
 use DataTables;
 
 class ProductController extends Controller
@@ -61,7 +63,7 @@ class ProductController extends Controller
 
                      // for status  
                     ->addColumn('status', function($row){
-                        if($row->status==5){
+                        if($row->status==6){
                         $status='Publish';
                         }else{
                             $status='Unpublish';
@@ -94,8 +96,7 @@ class ProductController extends Controller
         $shop=Shop::where(['vendor_id'=>auth()->user()->id,'status'=>1])->get();
         $brand=$this->activeBrand();
         $category=$this->allParentCategory();
-        // $status=SystemStatus::whereIn('id',array(5,6))->where('status',1)->get();
-        TempAttribute::where('vendor_id',auth()->user()->id)->delete();
+        TempAttribute::where('vendor_id',auth()->user()->id)->where('brouser_id',Session::getId())->delete();
         return view('vendor.product.create',compact('attributeType','shop','brand','category'));
     }
 
@@ -107,7 +108,6 @@ class ProductController extends Controller
      */
     public function store(ProductValidate $request)
     {
-
         //check if file is upload
          $image_name='';
          if($request->hasFile('image')){
@@ -134,7 +134,7 @@ class ProductController extends Controller
         $product->vendor_id           = auth()->user()->id;
         $product->shop_id             = $request->shop_id;
         $product->created_by          = auth()->user()->id;
-        $product->status              = 6;
+        $product->status              = 5;
         $product->save();
 
         //product category
@@ -163,17 +163,6 @@ class ProductController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -185,12 +174,13 @@ class ProductController extends Controller
         $attributeType=$this->activeType();
         $shop=Shop::where(['vendor_id'=>auth()->user()->id,'status'=>1])->get();
         $brand=$this->activeBrand();
-        $category=$this->allParentCategory();
-        // $status=SystemStatus::whereIn('id',array(5,6))->where('status',1)->get();
-        TempAttribute::where('vendor_id',auth()->user()->id)->delete();
+        $category=$this->activeCategory();
+        TempAttribute::where('vendor_id',auth()->user()->id)->where('brouser_id',Session::getId())->delete();
         $attribute=ProductAttribute::where('product_id',$id)
         ->leftjoin('attributes','attributes.id','=','product_attributes.type_id')
         ->leftjoin('attribute_values','attribute_values.id','=','product_attributes.value_id')
+        ->select('attributes.attribute_type','attribute_values.attribute','product_attributes.*')
+        ->orderBy('product_attributes.id','DESC')
         ->get();
         return view('vendor.product.edit',compact('product','attributeType','shop','brand','category','attribute'));
     }
@@ -204,18 +194,63 @@ class ProductController extends Controller
      */
     public function update(ProductUpdateRequest $request, $id)
     {
-        dd($id);
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+       $product = Product::findOrFail($id);
+        //check if file is upload
+        $image_name='';
+        if($request->hasFile('image')){
+          $image_name = time().'.'.$request->image->getClientOriginalExtension();
+          $request->image->move(('vendor/product/'), $image_name);
+        }else{
+          $image_name=$product->image;
+        } 
+       $product->product_name        = $request->product_name;
+       $product->product_slug        = \Str::slug($product->product_name);
+       $product->quantity            = $request->quantity;
+       $product->alert_quantity      = $request->alert_quantity;
+       $product->regular_price       = $request->regular_price;
+       $product->sale_price          = $request->sale_price;
+       $product->cost_price          = $request->cost_price;
+       $product->image               = $image_name;
+       $product->tag                 = $request->tag;
+       $product->is_featured         = $request->is_featured;
+       $product->stock_status        = $request->stock_status;
+       $product->dimension           = $request->dimension;
+       $product->short_description   = $request->short_description;
+       $product->long_description    = $request->long_description;
+       $product->brand_id            = $request->brand_id;
+       $product->vendor_id           = auth()->user()->id;
+       $product->shop_id             = $request->shop_id;
+       $product->created_by          = auth()->user()->id;
+       $product->status              = 5;
+       $product->save();
+
+       //product category
+       $this->updateProductcategory($product->id,$request->category_id);
+
+       //product attribute
+       $this->productAttribute(auth()->user()->id,$product->id,Session::getId());
+
+       
+        // gallery image
+        if($request->hasFile('galleryImage'))
+         {
+             ProductGallery::where('product_id',$id)->delete();
+             $galleryImage = [];
+             foreach($request->file('galleryImage') as $image)
+             {
+                 $filename = time().'.'.$image->getClientOriginalName();
+                 $image->move(('vendor/product/gallery/'), $filename);
+                 $gallery = new ProductGallery;
+                 $gallery->product_id =  $product->id;
+                 $gallery->image =  $filename;
+                 $gallery->created_by =  auth()->user()->id;
+                 $gallery->status =  7;
+                 $gallery->save();
+             }
+         }
+
+       return redirect()->route('products.index')->with('success','Product has been update successfully');
     }
 
 
@@ -229,7 +264,6 @@ class ProductController extends Controller
         $data = AttributeValue::where('type_id',$id)->where('status',1)->get();
         return response()->json($data);
     }
-
 
       /**
      * show product stock quantity.
@@ -285,6 +319,7 @@ class ProductController extends Controller
         }
         $store = new TempAttribute;
         $store->vendor_id=auth()->user()->id;
+        $store->brouser_id=Session::getId();
         $store->type_id=$request->type_id;
         $store->value_id=$request->value_id;
         $store->quantity=$request->att_quantity;
@@ -297,7 +332,7 @@ class ProductController extends Controller
 
       //this function show all temporary attribute of vendor
       public function getTempAttribute(){
-        $data=TempAttribute::where('vendor_id',auth()->user()->id)
+        $data=TempAttribute::where('vendor_id',auth()->user()->id)->where('brouser_id',Session::getId())
         ->leftjoin('attributes','attributes.id','=','temp_attributes.type_id')
         ->leftjoin('attribute_values','attribute_values.id','=','temp_attributes.value_id')
         ->select('temp_attributes.*','attribute_type','attribute')
@@ -308,7 +343,38 @@ class ProductController extends Controller
 
       //this function is using delete attribute from table
       public function deleteAttribute($id){
-         TempAttribute::where('id',$id)->delete();
+          TempAttribute::where('id',$id)->delete();
+      }
+
+      //this function is using delete attribute from table
+      public function deleteAttributePro($id){
+        return ProductAttribute::where('id',$id)->delete();
+      }
+
+      //this function edit attribute ajax request
+      public function editAttributePro($id){
+        return ProductAttribute::findOrFail($id);
+      }
+
+      //this function is update product attribute
+      public function updateAttributePro(Request $request){
+         $pro=ProductAttribute::findOrFail($request->id);
+         $image_name='';
+         if($request->hasFile('image')){
+           $image_name = time().'.'.$request->image->getClientOriginalExtension();
+           $request->image->move(('vendor/product/attribute/'), $image_name);
+         }else{
+           $image_name=$pro->image;
+         } 
+         $pro->quantity=$request->quantity;
+         $pro->alert_quantity=$request->alert_quantity;
+         $pro->quantity=$request->quantity;
+         $pro->regular_price=$request->regular_price;
+         $pro->sale_price=$request->sale_price;
+         $pro->cost_price=$request->cost_price;
+         $pro->image=$image_name;
+         $pro->save();
+         return redirect()->back()->with('success','Attribute has been update successfully');
       }
 
 

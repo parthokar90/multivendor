@@ -1,6 +1,6 @@
 @extends('vendor.layout.master')
 
-@section('title') Delivery Charge Edit @endsection
+@section('title') Coupon Edit @endsection
 
 @section('content')
  
@@ -11,7 +11,7 @@
                 <h1 class="main-title float-left">Dashboard</h1>
                 <ol class="breadcrumb float-right">
                     <li class="breadcrumb-item">Home</li>
-                    <li class="breadcrumb-item active">Delivery Charge Edit</li>
+                    <li class="breadcrumb-item active">Coupon Edit</li>
                 </ol>
                 <div class="clearfix"></div>
             </div>
@@ -25,6 +25,10 @@
                         @csrf 
                         {{method_field('PATCH')}}
                         <div class="form-group">
+                            <label>Coupon</label>
+                            <input type="text" name="coupon_code" value="{{$Coupon->coupon_code}}" class="form-control" required>
+                        </div>
+                        <div class="form-group">
                             <label>Amount</label>
                             <input type="number" name="amount" value="{{$Coupon->amount}}" class="form-control" required>
                         </div>
@@ -32,7 +36,7 @@
                             <label>Expire Date</label>
                             <input type="date" name="expire_date" value="{{$Coupon->expire_date}}" class="form-control" required>
                         </div>
-                        <button type="submit" class="btn btn-success">Add</button>
+                        <button type="submit" class="btn btn-success">Update</button>
                     </form>
                   </div>
              </div>

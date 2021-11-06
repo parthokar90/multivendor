@@ -25,7 +25,7 @@ class OrderController extends Controller
          */
         public function index(Request $request)
         {
-            $list=Order::orderBy('id','DESC')->with('vendor','customer','status')->get();
+            $list=Order::orderBy('id','DESC')->with('customer','status')->get();
             if ($request->ajax()) {
                 return Datatables::of($list)
                     ->addIndexColumn()
@@ -48,11 +48,6 @@ class OrderController extends Controller
                             return $email;
                          })
 
-                          //for customer mobile  
-                        ->addColumn('vendor', function($row){
-                            $vendors=$row->vendor->first_name.'&nbsp'.$row->vendor->last_name;  
-                            return $vendors;
-                          })
     
                         //for order status  
                         ->addColumn('status', function($row){
@@ -66,7 +61,7 @@ class OrderController extends Controller
                          return $btn;
                         })
     
-                       ->rawColumns(['customer','mobile','email','vendor','status','action'])
+                       ->rawColumns(['customer','mobile','email','status','action'])
     
                        ->make(true);
                   }

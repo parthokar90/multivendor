@@ -21,6 +21,7 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <div class="card mb-3">
                 <div class="card-body" style="background:#e7e7e7">
+                  @include('admin.include.message')
                        <form method="post" action="{{route('products.update',$product->id)}}" enctype="multipart/form-data">
                          @csrf 
                          {{method_field('PATCH')}}
@@ -161,23 +162,30 @@
                                      <table class="table table-bordered mt-3" id="att_table" style="display:none">
                                      </table>
                                      @if($attribute->count()>0)
-                                     <table class="table table-bordered">
-                                      <tr style="border:1px solid #000000;"><th>Type</th><th>Value</th><th>Qty</th><th>Alert Qty</th><th>Regular Price</th><th>Sell Price</th><th>Cost Price</th><th>Action</th></tr>
-                                      @foreach($attribute as $attributes)
-                                      <tr>  
-                                        <td>{{$attributes->attribute_type}}</td>  
-                                        <td>{{$attributes->attribute}}</td>  
-                                        <td>{{$attributes->quantity}}</td>
-                                         <td>{{$attributes->alert_quantity}}</td>  
-                                         <td>{{$attributes->regular_price}}</td>  
-                                         <td>{{$attributes->sale_price}}</td> 
-                                          <td>{{$attributes->cost_price}}</td>
-                                           <td>
-                                             <button onclick="deleteAttribute('+item.id+')" type="button" class="btn btn-danger" value="'+item.id+'"><i class="fa fa-trash"></i></button>
-                                            </td>  
-                                          </tr>
-                                          @endforeach 
-                                     </table>
+                                     <div class="card">
+                                      <table class="table table-bordered">
+                                        <tr style="border:1px solid #000000;font-size:10px;"><th>Type</th><th>Value</th><th>Qty</th><th>Alert</th><th>Regular</th><th>Sell</th><th>Cost</th><th>Image</th><th>Action</th></tr>
+                                        @foreach($attribute as $attributes)
+                                        <tr>  
+                                          <td>{{$attributes->attribute_type}}</td>  
+                                          <td>{{$attributes->attribute}}</td>  
+                                          <td>{{$attributes->quantity}}</td>
+                                           <td>{{$attributes->alert_quantity}}</td>  
+                                           <td>{{$attributes->regular_price}}</td>  
+                                           <td>{{$attributes->sale_price}}</td> 
+                                            <td>{{$attributes->cost_price}}</td>
+                                            <td><img width="30px" height="30px" src="{{asset('vendor/product/attribute/'.$attributes->image)}}"></td>
+                                             <td>
+                                               <button style="width: 38px" onclick="deleteAttributePro({{$attributes->id}})" type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                               <button style="width: 38px" onclick="attEdit({{$attributes->id}})" type="button" class="btn btn-info"><i class="fa fa-edit"></i></button>
+                                               
+                                              </td>  
+                                            </tr>
+                                            @endforeach 
+                                       </table>
+                                     </div>
+                                  
+
                                      @endif 
                                      </div>
                                   
@@ -247,14 +255,19 @@
                                           <span class="text-danger"> {{$errors->first('category_id')}}</span>
                                           @endif
                                           <div class="col-lg-12" style="height: 200px;  overflow-y: scroll;">
-                                            @foreach($category as $categorys)
-                                              <input type="checkbox" id="{{$categorys->id}}" name="category_id[]" value="{{$categorys->id}}">
-                                              <label for="{{$categorys->id}}"> {{$categorys->category_name}}</label><br>
-                                                @foreach($categorys->subCategory as $child)
-                                                  <input class="ml-5" type="checkbox" id="{{$child->id}}" name="category_id[]" value="{{$child->id}}">
-                                                  <label for="{{$child->id}}"> {{$child->category_name}}</label><br>
-                                                @endforeach 
-                                            @endforeach 
+                                               @foreach($category as $categorys)
+                                                 @php $check = ''; @endphp 
+                                                  @php $pro_cat=DB::table('product_categories')->where('product_id',$product->id)
+                                                  ->where('category_id',$categorys->id)->first(); 
+                                                  @endphp
+                                                  @if(isset($pro_cat))
+                                                    @if($categorys->id == $pro_cat->category_id)
+                                                      @php $check = 'checked'; @endphp 
+                                                    @endif 
+                                                  @endif
+                                                 <input type="checkbox" id="{{$categorys->id}}" name="category_id[]" value="{{$categorys->id}}" {{$check}}>
+                                                 <label for="{{$categorys->id}}"> {{$categorys->category_name}}</label><br>
+                                               @endforeach 
                                           </div>
                                       </div>
                                   </div>
@@ -345,6 +358,7 @@
         </div>
     </div>
 </div>
+@include('vendor.product.att_edit_modal');
 <script>
 // attribute value ajax request
  $("#attribute_type").change(function(){
@@ -439,5 +453,35 @@
            });
   }
 
+  function deleteAttributePro(id){
+      $.ajax({
+               type:'GET',
+               url:'{{url('delete/attribute/product/')}}'+'/'+id,
+               success:function(response) {
+                 console.log(response);
+                location.reload();
+               },error:function(response){
+                 console.log(response);
+               }
+           });
+     }
+     function attEdit(id){
+      $.ajax({
+               type:'GET',
+               url:'{{url('edit/attribute/product/')}}'+'/'+id,
+               success:function(response) {
+                 console.log(response);
+                 document.getElementById("id").value=response.id;
+                 document.getElementById("quantity").value=response.quantity;
+                 document.getElementById("alert_quantity").value=response.alert_quantity;
+                 document.getElementById("regular_price").value=response.regular_price;
+                 document.getElementById("sale_price").value=response.sale_price;
+                 document.getElementById("cost_price").value=response.cost_price;
+                 $("#attEditModal").modal('show');
+               },error:function(response){
+                 console.log(response);
+               }
+           });
+     }
 </script>
 @endsection 

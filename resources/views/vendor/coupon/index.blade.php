@@ -27,6 +27,7 @@
                                 <thead>
                                     <tr>
                                         <th>Sl</th>
+                                        <th>Coupon</th> 
                                         <th>Amount</th> 
                                         <th>Expire Date</th> 
                                         <th>Action</th> 
@@ -47,6 +48,7 @@
           ajax: "{{ route('coupon.index') }}",
           columns: [
               {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+              {data: 'coupon_code', name: 'coupon_code'},
               {data: 'amount', name: 'amount'},
               {data: 'expire_date', name: 'expire_date'},
               {
