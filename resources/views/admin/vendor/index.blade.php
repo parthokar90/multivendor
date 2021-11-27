@@ -22,7 +22,6 @@
             <div class="card mb-3">
                 <div class="card-body">
                        @include('admin.include.message')
-                       <div class="table-responsive">
                         <table class="datatable table table-bordered table-hover display">
                             <thead>
                                 <tr>
@@ -36,7 +35,6 @@
                                 </tr>
                             </thead>
                         </table>
-                    </div>
                   </div>
              </div>
         </div>

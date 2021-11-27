@@ -1,0 +1,198 @@
+Repository coding pattern CRUD
+
+1: Create a Repository folder inside App folder
+
+2: Create Repository class inside Repository folder
+
+3: Create controller 
+
+
+************** Controller ****************
+
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Repository\CouponRepository;
+
+use Illuminate\Http\Request;
+
+class CouponController extends Controller
+{
+
+    /**
+     * create autoload object of coupon repository class.
+     */
+
+     public function __construct(CouponRepository $couponRepository){
+        $this->CouponRepository = $couponRepository;
+     }
+
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+       return $this->CouponRepository->index();
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $data=$request->all();
+        return $this->CouponRepository->store($data);
+    }
+    
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        return $this->CouponRepository->edit($id);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $data=$request->all();
+        return $this->CouponRepository->update($data,$id);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        return $this->CouponRepository->destroy($id);
+    }
+}
+
+
+
+
+
+************** Repository claa ****************
+
+<?php 
+
+namespace App\Repository;
+use DB;
+use Validator;
+
+class CouponRepository{
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(){
+       $data = DB::table('coupons')->orderBy('id','DESC')->get();
+       return [
+        'status' => 200,
+        'success' => true,
+        'data' => $data,
+       ];
+    }
+
+     /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+
+     public function store($data){
+        $validator = Validator::make($data, [
+            'coupon_title' => 'required',
+        ]);
+
+        if ($validator->fails())
+        {
+            return [
+                   'status' => 200,
+                   'success' => false,
+                   'msg' => 'error',
+                   'data' => $validator->errors()->first()
+                ];
+        }  
+       DB::table('coupons')->insert([
+           'coupon_title'=>$data['coupon_title']
+       ]);
+       return [
+        'status' => 200,
+        'success' => true,
+        'msg' => 'Sucessfully insert',
+       ];
+     }
+
+     
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update($data, $id)
+    {
+        $validator = Validator::make($data, [
+            'coupon_title' => 'required',
+        ]);
+        if ($validator->fails())
+        {
+           return [
+                   'status' => 200,
+                   'success' => false,
+                   'msg' => 'error',
+                   'data' => $validator->errors()->first()
+           ];
+        }  
+        DB::table('coupons')->where('id',$id)->update([
+            'coupon_title'=>$data['coupon_title']
+        ]);
+        return [
+         'status' => 200,
+         'success' => true,
+         'msg' => 'Sucessfully Update',
+        ];
+    }
+
+     /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        DB::table('coupons')->where('id',$id)->delete();
+        return [
+         'status' => 200,
+         'success' => true,
+         'msg' => 'Sucessfully Delete',
+        ];
+    }
+
+}

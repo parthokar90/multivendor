@@ -9,7 +9,6 @@ use App\Models\vendor\Shop;
 use App\Models\vendor\Product;
 use App\Models\vendor\Vendor;
 use App\Models\customer\Order;
-use App\Models\customer\OrderItem;
 use App\Models\admin\District;
 use App\Models\vendor\ProductAttribute;
 
@@ -74,51 +73,5 @@ trait CommonTrait {
      //all active district
      public function activeDistrict(){
         return District::where('status',1)->get();
-     }
-
-     //update order item
-     public function updateOrderItem($action,$orderId,$productId,$attributeId,$quantity){
-          $orderItem=OrderItem::findOrFail($orderId);
-          if($action=='minus'){
-          OrderItem::where('id',$orderId)->update([
-            'quantity'=> $orderItem->quantity-$quantity,
-          ]);
-
-          if($orderItem->attribute_id==0){
-             //stock increase from default product
-             $stock=Product::where('id',$productId)->sum('quantity');
-             Product::where('id',$productId)->update([
-               'quantity'=>$stock+$quantity
-             ]);
-          }else{
-             //stock increase from attribute product 
-             $stock=ProductAttribute::where(['product_id'=>$productId,'value_id'=>$attributeId])->sum('quantity');
-             ProductAttribute::where(['product_id'=>$productId,'value_id'=>$attributeId])->update([
-               'quantity'=>$stock+$quantity
-             ]);
-          }
-        }else{
-           //stock decrease
-            //update order item table 
-          OrderItem::where('id',$orderId)->update([
-            'quantity'=> $orderItem->quantity+$quantity,
-          ]);
-           //check default or attribute product
-           if($orderItem->attribute_id==0){
-            //stock increase from default product
-            $stock=Product::where('id',$productId)->sum('quantity');
-            Product::where('id',$productId)->update([
-              'quantity'=>$stock-$quantity
-            ]);
-         }else{
-            //stock increase from attribute product 
-            $stock=ProductAttribute::where(['product_id'=>$productId,'value_id'=>$attributeId])->sum('quantity');
-            ProductAttribute::where(['product_id'=>$productId,'value_id'=>$attributeId])->update([
-              'quantity'=>$stock-$quantity
-            ]);
-         }
-             
-        }
-         return back()->with('success','Item quantity has been update successfully.')->send();
      }
 }

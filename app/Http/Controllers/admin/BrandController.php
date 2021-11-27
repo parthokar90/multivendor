@@ -35,7 +35,7 @@ class BrandController extends Controller
                  //for image
                  ->addColumn('image', function($row){
                     $src=asset('admin/brand/'.$row->image);
-                    return '<img src="'.$src.'" border="0" width="40" class="img-rounded" align="center" />';
+                    return '<img src="'.$src.'" border="0" width="80" class="img-rounded" align="center" />';
                   })
 
                   // for status  

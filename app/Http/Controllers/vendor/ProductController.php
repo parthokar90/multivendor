@@ -96,7 +96,7 @@ class ProductController extends Controller
         $shop=Shop::where(['vendor_id'=>auth()->user()->id,'status'=>1])->get();
         $brand=$this->activeBrand();
         $category=$this->allParentCategory();
-        TempAttribute::where('vendor_id',auth()->user()->id)->where('brouser_id',Session::getId())->delete();
+        TempAttribute::where('vendor_id',auth()->user()->id)->delete();
         return view('vendor.product.create',compact('attributeType','shop','brand','category'));
     }
 
@@ -175,7 +175,7 @@ class ProductController extends Controller
         $shop=Shop::where(['vendor_id'=>auth()->user()->id,'status'=>1])->get();
         $brand=$this->activeBrand();
         $category=$this->activeCategory();
-        TempAttribute::where('vendor_id',auth()->user()->id)->where('brouser_id',Session::getId())->delete();
+        TempAttribute::where('vendor_id',auth()->user()->id)->delete();
         $attribute=ProductAttribute::where('product_id',$id)
         ->leftjoin('attributes','attributes.id','=','product_attributes.type_id')
         ->leftjoin('attribute_values','attribute_values.id','=','product_attributes.value_id')
@@ -229,7 +229,7 @@ class ProductController extends Controller
        $this->updateProductcategory($product->id,$request->category_id);
 
        //product attribute
-       $this->productAttribute(auth()->user()->id,$product->id,Session::getId());
+       $this->productAttribute(auth()->user()->id,$product->id);
 
        
         // gallery image
@@ -319,7 +319,6 @@ class ProductController extends Controller
         }
         $store = new TempAttribute;
         $store->vendor_id=auth()->user()->id;
-        $store->brouser_id=Session::getId();
         $store->type_id=$request->type_id;
         $store->value_id=$request->value_id;
         $store->quantity=$request->att_quantity;
@@ -332,7 +331,7 @@ class ProductController extends Controller
 
       //this function show all temporary attribute of vendor
       public function getTempAttribute(){
-        $data=TempAttribute::where('vendor_id',auth()->user()->id)->where('brouser_id',Session::getId())
+        $data=TempAttribute::where('vendor_id',auth()->user()->id)
         ->leftjoin('attributes','attributes.id','=','temp_attributes.type_id')
         ->leftjoin('attribute_values','attribute_values.id','=','temp_attributes.value_id')
         ->select('temp_attributes.*','attribute_type','attribute')
@@ -359,13 +358,11 @@ class ProductController extends Controller
       //this function is update product attribute
       public function updateAttributePro(Request $request){
          $pro=ProductAttribute::findOrFail($request->id);
-         $image_name='';
+         $image_name=$pro->image;
          if($request->hasFile('image')){
            $image_name = time().'.'.$request->image->getClientOriginalExtension();
            $request->image->move(('vendor/product/attribute/'), $image_name);
-         }else{
-           $image_name=$pro->image;
-         } 
+         }
          $pro->quantity=$request->quantity;
          $pro->alert_quantity=$request->alert_quantity;
          $pro->quantity=$request->quantity;

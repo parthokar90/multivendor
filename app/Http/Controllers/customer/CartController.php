@@ -61,6 +61,10 @@ class CartController extends Controller
           $type_id=$request->type_id;
           $qty=$request->quantity;
           $productDetails=Product::findOrFail($product_id);
+          //check if product has not out of stock
+          if($productDetails->stock_status==0){
+            return back()->with('error','Product Out Of Stock');
+          }
           $attributeDetails=ProductAttribute::where('product_id',$product_id)->where('type_id',$type_id)->where('value_id',$attribute_id)->first();
   
           //check product has attribute or not

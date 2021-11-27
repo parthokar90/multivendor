@@ -10,6 +10,7 @@ use App\Http\Controllers\admin\VendorController;
 use App\Http\Controllers\admin\CustomerController;
 use App\Http\Controllers\admin\OrderController;
 use App\Http\Controllers\admin\ProductController;
+use App\Http\Controllers\admin\SliderController;
 
 
 //login route start
@@ -51,6 +52,10 @@ use App\Http\Controllers\admin\ProductController;
 //customer route start
   Route::resource('customers',CustomerController::class);
 //customer route end
+
+//slider route start
+  Route::resource('sliders',SliderController::class);
+//slider route end
 
 //order route start
   Route::get('admin/order',[OrderController::class,'index'])->name('order.page');

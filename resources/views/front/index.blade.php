@@ -18,7 +18,12 @@
                                     <h4 data-animation="fadeInUp" data-delay=".2s">{{$sliders->text}}</h4>
                                     <h1 data-animation="fadeInUp" data-delay=".4s">{{$sliders->text}}</h1>
                                     <p data-animation="fadeInUp" data-delay=".6s">{{$sliders->description}}</p>
-                                    <a href="shop-3-column-sidebar.html" class="button-style1" data-animation="fadeInUp" data-delay=".8s">shop now <span class="btn-dot"></span></a>
+                                    @if($sliders->link=='')
+                                      @php $url="#"; @endphp
+                                      @else 
+                                      @php $url=$sliders->link; @endphp
+                                    @endif
+                                    <a href="{{$url}}" class="button-style1" data-animation="fadeInUp" data-delay=".8s">shop now <span class="btn-dot"></span></a>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-5">

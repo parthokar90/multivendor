@@ -128,119 +128,21 @@
                     </ul>
                 </li>
 
-
-                {{-- <li class="submenu">
-                    <a id="tables" href="#">
-                        <i class="fas fa-user"></i>
-                        <span>Customer Query</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <ul class="list-unstyled">
-                        <li>
-                            <a href="tables-basic.html">List</a>
-                        </li>
-                    </ul>
-                </li> --}}
-
-                {{-- <li class="submenu">
-                    <a id="tables" href="#">
-                        <i class="fas fa-copyright"></i>
-                        <span>Coupon</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <ul class="list-unstyled">
-                        <li>
-                            <a href="tables-basic.html">List</a>
-                        </li>
-                        <li>
-                            <a href="tables-datatable.html">Add New</a>
-                        </li>
-                    </ul>
-                </li> --}}
-
-                {{-- <li class="submenu">
-                    <a id="tables" href="#">
-                        <i class="fas fa-truck"></i>
-                        <span>Delivery Charge</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <ul class="list-unstyled">
-                        <li>
-                            <a href="tables-basic.html">List</a>
-                        </li>
-                        <li>
-                            <a href="tables-datatable.html">Add New</a>
-                        </li>
-                    </ul>
-                </li> --}}
-
-                {{-- <li class="submenu">
-                    <a id="tables" href="#">
-                        <i class="fas fa-thermometer-three-quarters"></i>
-                        <span>System Status</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <ul class="list-unstyled">
-                        <li>
-                            <a href="tables-basic.html">List</a>
-                        </li>
-                        <li>
-                            <a href="tables-datatable.html">Add New</a>
-                        </li>
-                    </ul>
-                </li> --}}
-
-                {{-- <li class="submenu">
-                    <a id="tables" href="#">
-                        <i class="fas fa-blog"></i>
-                        <span>System Log</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <ul class="list-unstyled">
-                        <li>
-                            <a href="tables-basic.html">List</a>
-                        </li>
-                    </ul>
-                </li> --}}
-
                 <li class="submenu">
-                    <a id="tables" href="#">
-                        <i class="fas fa-user-tag"></i>
-                        <span>Role</span>
+                    <a class="@if($url==='sliders.index' || $url==='sliders.create') active @endif" id="tables" href="#">
+                        <i class="fas fa-flag"></i>
+                        <span>Slider</span>
                         <span class="menu-arrow"></span>
                     </a>
                     <ul class="list-unstyled">
                         <li>
-                            <a href="tables-basic.html">List</a>
+                            <a class="@if($url==='sliders.index') active @endif" href="{{route('sliders.index')}}">List</a>
+                            <a class="@if($url==='sliders.create') active @endif" href="{{route('sliders.create')}}">Create</a>
                         </li>
                     </ul>
                 </li>
 
-                <li class="submenu">
-                    <a id="tables" href="#">
-                        <i class="fas fa-user"></i>
-                        <span>Assign Permission</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <ul class="list-unstyled">
-                        <li>
-                            <a href="tables-basic.html">List</a>
-                        </li>
-                    </ul>
-                </li>
-
-                {{-- <li class="submenu">
-                    <a id="tables" href="#">
-                        <i class="fas fa-cog"></i>
-                        <span>Settings</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <ul class="list-unstyled">
-                        <li>
-                            <a href="tables-basic.html">Update Settings</a>
-                        </li>
-                    </ul>
-                </li> --}}
+    
 
                 <li class="submenu">
                     <li class="submenu">

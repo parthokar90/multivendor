@@ -4,21 +4,17 @@ namespace App\Http\Controllers\admin;
    
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\admin\CategoryValidate;
-use Illuminate\Support\Str;
-use App\Traits\CommonTrait;
-use App\Models\admin\Category;
+use App\Http\Requests\admin\SliderValidate;
+use App\Http\Requests\admin\SliderUpdateValidate;
+use App\Models\admin\Slider;
 use DataTables;
   
-class CategoryController extends Controller
+class SliderController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth:admin');
-    }
-
-    //import trait
-    use CommonTrait;    
+    }  
 
     /**
      * Display a listing of the resource.
@@ -27,14 +23,14 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
-        $list = Category::orderBy('id','DESC')->get();
+        $list = Slider::orderBy('id','DESC')->get();
         if ($request->ajax()) {
             return Datatables::of($list)
                 ->addIndexColumn()
 
                  //for image
                  ->addColumn('image', function($row){
-                    $src=asset('admin/category/'.$row->image);
+                    $src=asset('admin/slider/'.$row->image);
                     return '<img src="'.$src.'" border="0" width="80" class="img-rounded" align="center" />';
                   })
 
@@ -50,7 +46,7 @@ class CategoryController extends Controller
 
                   //for action column
                   ->addColumn('action', function($row){
-                     $btn = '<a class="btn btn-primary btn-sm" title="Edit Category" href="'.route('categories.edit',$row->id).'"> <i class="fa fa-edit"></i></a>';
+                     $btn = '<a class="btn btn-primary btn-sm" title="Edit Slider" href="'.route('sliders.edit',$row->id).'"> <i class="fa fa-edit"></i></a>';
                      return $btn;
                    })
 
@@ -58,7 +54,7 @@ class CategoryController extends Controller
 
                    ->make(true);
               }
-            return view('admin.category.index');
+            return view('admin.slider.index');
      }
      
     /**
@@ -68,8 +64,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categorys = $this->activeCategory();
-        return view('admin.category.create',compact('categorys'));
+        return view('admin.slider.create');
     }
     
     /**
@@ -78,26 +73,24 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CategoryValidate $request)
+    public function store(SliderValidate $request)
     {
           //check if file is upload
           $image_name='';
           if($request->hasFile('image')){
             $image_name = time().'.'.$request->image->getClientOriginalExtension();
-            $request->image->move(('admin/category/'), $image_name);
+            $request->image->move(('admin/slider/'), $image_name);
           } 
   
-          $store = new Category;  
-
-          $store->parent_id=$request->parent_id;
-
-          $store->category_name=$request->category_name;
-
-          $store->category_type=$request->category_type;
-
-          $store->slug=Str::slug($request->category_name);
+          $store = new Slider;  
 
           $store->image=$image_name;
+
+          $store->text=$request->text;
+
+          $store->description=$request->description;
+
+          $store->link=$request->link;
 
           $store->created_by=auth()->user()->id;
 
@@ -105,8 +98,8 @@ class CategoryController extends Controller
 
           $store->save();
 
-          return redirect()->route('categories.index')
-          ->with('success','Category created successfully.');
+          return redirect()->route('sliders.index')
+          ->with('success','Slider created successfully.');
     }
      
     /**
@@ -115,10 +108,9 @@ class CategoryController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit(Slider $slider)
     {
-        $categorys = $this->activeCategory();
-        return view('admin.category.edit',compact('categorys','category'));
+        return view('admin.slider.edit',compact('slider'));
     }
     
     /**
@@ -128,33 +120,31 @@ class CategoryController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(CategoryValidate $request,Category $category)
+    public function update(SliderUpdateValidate $request,Slider $slider)
     {
          //check if file is upload
          if($request->hasFile('image')){
             $image_name = time().'.'.$request->image->getClientOriginalExtension();
-            $request->image->move(('admin/category/'), $image_name);
+            $request->image->move(('admin/slider/'), $image_name);
           }else{
-            $image_name = $category->image;
+            $image_name = $slider->image;
           }
 
-          $category->parent_id=$request->parent_id;
+          $slider->image=$image_name;
 
-          $category->category_name=$request->category_name;
+          $slider->text=$request->text;
 
-          $category->category_type=$request->category_type;
+          $slider->description=$request->description;
 
-          $category->slug=Str::slug($request->category_name);
+          $slider->link=$request->link;
 
-          $category->image=$image_name;
+          $slider->created_by=auth()->user()->id;
 
-          $category->created_by=auth()->user()->id;
+          $slider->status=$request->status;  
 
-          $category->status=$request->status;  
+          $slider->save();
 
-          $category->save();
-
-          return redirect()->route('categories.index')
-          ->with('success','Category update successfully.');    
+          return redirect()->route('sliders.index')
+          ->with('success','Slider update successfully.');    
     }
 }

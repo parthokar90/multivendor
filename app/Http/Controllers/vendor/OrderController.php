@@ -83,20 +83,6 @@ class OrderController extends Controller
         return view('vendor.order.orderDetails',compact('order','totalItem','defaultPrice','attributePrice','totalQty'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $qty=$request->quantity;
-        $orderItem=OrderItem::findOrFail($id);
-        $this->updateOrderItem($request->action,$id,$orderItem->product_id,$orderItem->attribute_value_id,$qty); 
-    }
-
     //status update
     public function statusUpdate(Request $request,$id){
         $order=Order::findOrFail($id);

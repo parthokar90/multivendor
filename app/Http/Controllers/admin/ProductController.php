@@ -30,7 +30,8 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $list=Product::where('vendor_id',auth()->user()->id)->orderBy('id','DESC')->with('brand','shop')->get();        
+        $list=Product::orderBy('id','DESC')->with('brand','shop')->get(); 
+
         if ($request->ajax()) {
             return Datatables::of($list)
                 ->addIndexColumn()
@@ -84,7 +85,6 @@ class ProductController extends Controller
         $shop=Shop::where(['vendor_id'=>auth()->user()->id,'status'=>1])->get();
         $brand=$this->activeBrand();
         $category=$this->activeCategory();
-        TempAttribute::where('vendor_id',auth()->user()->id)->where('brouser_id',Session::getId())->delete();
         $attribute=ProductAttribute::where('product_id',$id)
         ->leftjoin('attributes','attributes.id','=','product_attributes.type_id')
         ->leftjoin('attribute_values','attribute_values.id','=','product_attributes.value_id')

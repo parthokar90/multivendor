@@ -1,6 +1,6 @@
 @extends('admin.layout.master')
 
-@section('title') Brand List @endsection
+@section('title') Slider List @endsection
 
 @section('content')
  
@@ -11,7 +11,7 @@
                 <h1 class="main-title float-left">Dashboard</h1>
                 <ol class="breadcrumb float-right">
                     <li class="breadcrumb-item">Home</li>
-                    <li class="breadcrumb-item active">Brand List</li>
+                    <li class="breadcrumb-item active">Slider List</li>
                 </ol>
                 <div class="clearfix"></div>
             </div>
@@ -26,8 +26,9 @@
                                 <thead>
                                     <tr>
                                         <th>Sl</th>
-                                        <th>Brand</th>
                                         <th>Image</th>
+                                        <th>Link</th>
+                                        <th>Title</th>
                                         <th>Status</th> 
                                         <th>Action</th>
                                     </tr>
@@ -43,11 +44,12 @@
       var table = $('.datatable').DataTable({
           processing: true,
           serverSide: true,
-          ajax: "{{ route('brands.index') }}",
+          ajax: "{{ route('sliders.index') }}",
           columns: [
               {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-              {data: 'brand_name', name: 'brand_name'},
               {data: 'image', name: 'image'},
+              {data: 'link', name: 'link'},
+              {data: 'text', name: 'text'},
               {data: 'status', name: 'status'},
               {
                   data: 'action', 

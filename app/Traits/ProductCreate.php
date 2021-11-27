@@ -32,8 +32,8 @@ trait ProductCreate{
     }
 
     //this function insert product multiple attribute
-    public function productAttribute($vendorId,$productId,$brouser_id){
-       $data = TempAttribute::where('vendor_id',$vendorId)->where('brouser_id',$brouser_id)->get();
+    public function productAttribute($vendorId,$productId){
+       $data = TempAttribute::where('vendor_id',$vendorId)->get();
        foreach($data as $item){
          $store = new ProductAttribute;
          $store->product_id=$productId;

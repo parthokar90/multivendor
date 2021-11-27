@@ -28,7 +28,7 @@
                              
                              <div class="form-group">
                               <label>Product Name <span class="text-danger">*</span></label>
-                               <input type="text" name="product_name" value="{{old('product_name')}}" class="form-control" placeholder="Product Name"/>
+                               <input type="text" name="product_name" value="{{old('product_name')}}" class="form-control" placeholder="Product Name" required/>
                                @if($errors->has('product_name'))
                                <span class="text-danger"> {{$errors->first('product_name')}}</span>
                                @endif
@@ -36,7 +36,7 @@
 
                              <div class="form-group">
                               <label>Product Description <span class="text-danger">*</span></label>
-                               <textarea class="form-control" cols="5" rows="5" name="long_description" placeholder="Product Description">{{old('long_description')}}</textarea>
+                               <textarea class="form-control" cols="5" rows="5" name="long_description" placeholder="Product Description" required>{{old('long_description')}}</textarea>
                                @if($errors->has('long_description'))
                                <span class="text-danger"> {{$errors->first('long_description')}}</span>
                                @endif
@@ -59,17 +59,17 @@
 
                                        <div class="form-group">
                                         <label>Regular Price</label>
-                                        <input type="text" name="regular_price" value="0" class="form-control" placeholder="Regular Price"/>
+                                        <input type="text" name="regular_price" value="@if(old('regular_price')) {{old('regular_price')}} @else 0 @endif" class="form-control" placeholder="Regular Price"/>
                                        </div>
 
                                        <div class="form-group">
                                         <label>Sell Price</label>
-                                        <input type="text" name="sale_price" value="0" class="form-control" placeholder="Sell Price"/>
+                                        <input type="text" name="sale_price" value="@if(old('sale_price')) {{old('sale_price')}} @else 0 @endif" class="form-control" placeholder="Sell Price"/>
                                        </div>
 
                                        <div class="form-group">
                                         <label>Cost Price</label>
-                                        <input type="text" name="cost_price" value="0" class="form-control" placeholder="Cost Price"/>
+                                        <input type="text" name="cost_price" value="@if(old('cost_price')) {{old('cost_price')}} @else 0 @endif" class="form-control" placeholder="Cost Price"/>
                                        </div>
 
                                     </div>
@@ -78,19 +78,27 @@
                                       <div class="form-group">
                                         <label>Stock Status</label>
                                         <select class="form-control" name="stock_status">
-                                          <option value="1">In Stock</option>
+                                          @if(old('stock_status')==1)
+                                          <option value="1" selected>In Stock</option>
                                           <option value="0">Out Of Stock</option>
+                                          @elseif(old('stock_status')==0)
+                                          <option value="1">In Stock</option>
+                                          <option value="0" selected>Out Of Stock</option>
+                                          @else 
+                                          <option value="1" selected>In Stock</option>
+                                          <option value="0">Out Of Stock</option>
+                                          @endif
                                         </select>
                                        </div>
 
                                        <div class="form-group">
                                         <label>Stock Quantity</label>
-                                        <input type="text" name="quantity" value="0" class="form-control" placeholder="Stock Quantity"/>
+                                        <input type="text" min="0" name="quantity" value="@if(old('quantity')) {{old('quantity')}} @else 0 @endif" class="form-control" placeholder="Stock Quantity"/>
                                        </div>
 
                                        <div class="form-group">
                                         <label>Alert Quantity</label>
-                                        <input type="text" name="alert_quantity" value="0" class="form-control" placeholder="Alert Quantity"/>
+                                        <input type="text" min="0" name="alert_quantity" value="@if(old('alert_quantity')) {{old('alert_quantity')}} @else 0 @endif" class="form-control" placeholder="Alert Quantity"/>
                                        </div>
                                     
                                     </div>
@@ -98,14 +106,14 @@
                                       <h4>Shipping Information</h4>
                                        <div class="form-group">
                                         <label>Shipping</label>
-                                        <input type="text" name="dimension" class="form-control" placeholder="Shipping"/>
+                                        <input type="text" name="dimension" value="{{old('dimension')}}" class="form-control" placeholder="Shipping"/>
                                        </div>
                                     </div>
                                     <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
                                     <h4>Attribute Information</h4>
                                      <div class="form-group">
                                         <label>Select Type</label>
-                                        <select class="form-control" name="" id="attribute_type">
+                                        <select class="form-control" name="a_type" id="attribute_type">
                                           <option value="">Select</option>
                                            @foreach($attributeType as $types)
                                              <option myselect="{{$types->attribute_type}}" value="{{$types->id}}">{{$types->attribute_type}}</option>
@@ -162,7 +170,7 @@
  
                                         <div class="form-group">
                                          <label>Tag</label>
-                                         <input type="text" name="tag" value="" class="form-control" placeholder="Enter Tag comma seperate"/>
+                                         <input type="text" name="tag" value="{{old('tag')}}" class="form-control" placeholder="Enter Tag comma seperate"/>
                                         </div>
                                      </div>
                                     </div>
@@ -170,7 +178,7 @@
                              </div>
                              <div class="form-group mt-3">
                               <label>Short Description <span class="text-danger">*</span></label>
-                               <textarea class="form-control" cols="5" rows="5" name="short_description" placeholder="Product Short Description">{{old('short_description')}}</textarea>
+                               <textarea class="form-control" cols="5" rows="5" name="short_description" placeholder="Product Short Description" required>{{old('short_description')}}</textarea>
                                @if($errors->has('short_description'))
                                <span class="text-danger"> {{$errors->first('short_description')}}</span>
                                @endif
@@ -234,7 +242,7 @@
                                   <div class="card-body text-center">
                                       <div class="row">
                                           <div class="col-lg-12">
-                                           <select class="form-control" name="brand_id">
+                                           <select class="form-control" name="brand_id" required>
                                              @foreach($brand as $brands)
                                               <option value="{{$brands->id}}">{{$brands->brand_name}} </option>
                                              @endforeach 
@@ -251,7 +259,7 @@
                               <div class="card-body text-center">
                                   <div class="row">
                                       <div class="col-lg-12">
-                                       <select class="form-control" name="shop_id">
+                                       <select class="form-control" name="shop_id" required>
                                          @foreach($shop as $shops)
                                            <option value="{{$shops->id}}">{{$shops->shop_name}}</option>
                                           @endforeach 
@@ -268,7 +276,7 @@
                                 <div class="card-body text-center">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                          <input type="file" name="image" class="form-control" accept="image/*">
+                                          <input type="file" name="image" class="form-control" accept="image/*" required>
                                           @if($errors->has('image'))
                                           <span class="text-danger"> {{$errors->first('image')}}</span>
                                           @endif
