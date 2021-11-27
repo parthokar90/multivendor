@@ -25,7 +25,7 @@ class WishlistController extends Controller
     public function index()
     {
        $list=$this->wishListItem();
-       return view('customer.wishlist.wishlist',compact('list'));
+       return view('customer.wishlist.customer-wishlist',compact('list'));
     }
 
     /**
@@ -117,10 +117,10 @@ class WishlistController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function deleteWishlist($id)
     {
         $delete=ProductWishlist::findOrFail($id);
         $delete->delete();
-        return back()->with('success','Item has been delete from wishlist');
+        return back()->with('error','Item has been delete from wishlist');
     }
 }

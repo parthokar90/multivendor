@@ -28,7 +28,7 @@
                              
                              <div class="form-group">
                               <label>Product Name <span class="text-danger">*</span></label>
-                               <input type="text" name="product_name" class="form-control" placeholder="Product Name"/>
+                               <input type="text" name="product_name" value="{{old('product_name')}}" class="form-control" placeholder="Product Name"/>
                                @if($errors->has('product_name'))
                                <span class="text-danger"> {{$errors->first('product_name')}}</span>
                                @endif
@@ -36,7 +36,7 @@
 
                              <div class="form-group">
                               <label>Product Description <span class="text-danger">*</span></label>
-                               <textarea class="form-control" cols="5" rows="5" name="long_description" placeholder="Product Description"></textarea>
+                               <textarea class="form-control" cols="5" rows="5" name="long_description" placeholder="Product Description">{{old('long_description')}}</textarea>
                                @if($errors->has('long_description'))
                                <span class="text-danger"> {{$errors->first('long_description')}}</span>
                                @endif
@@ -170,7 +170,7 @@
                              </div>
                              <div class="form-group mt-3">
                               <label>Short Description <span class="text-danger">*</span></label>
-                               <textarea class="form-control" cols="5" rows="5" name="short_description" placeholder="Product Short Description"></textarea>
+                               <textarea class="form-control" cols="5" rows="5" name="short_description" placeholder="Product Short Description">{{old('short_description')}}</textarea>
                                @if($errors->has('short_description'))
                                <span class="text-danger"> {{$errors->first('short_description')}}</span>
                                @endif

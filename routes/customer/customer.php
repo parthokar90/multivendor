@@ -40,6 +40,7 @@ use App\Http\Controllers\customer\CheckoutController;
 //wishlist route start
   Route::resource('wishlist',WishlistController::class);
   Route::get('add/wishlist/{id}',[WishlistController::class,'addWishlist'])->name('add.wishlist');
+  Route::get('del/wishlist/{id}',[WishlistController::class,'deleteWishlist'])->name('delete.wishlist');
 //wishlist route end
 
 //profile route start
@@ -49,8 +50,7 @@ use App\Http\Controllers\customer\CheckoutController;
 
 //Order route start
   Route::get('customer-order',[OrderController::class,'order'])->name('customer.order');
-  Route::get('customer-order-edit/{id}',[OrderController::class,'orderDetails'])->name('customer.order.edit');
-  Route::post('customer-order-update/{id}',[OrderController::class,'orderUpdate'])->name('customer.order.update');
+  Route::get('customer-order-view/{id}',[OrderController::class,'orderDetails'])->name('customer.order.edit');
 //Order route end
 
 

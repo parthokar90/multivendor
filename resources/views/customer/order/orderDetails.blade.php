@@ -98,12 +98,9 @@
                        <th>Shop</th>
                        <th>Product</th>
                        <th>Image</th>
-                       <th>Stock</th>
                        <th>Price</th>
                        <th>Order Quantity</th>
                        <th>Sub Total</th>
-                       <th>Quantity</th>
-                       <th>Action</th>
                     </tr>
 
                     @forelse($order->orderItem as $key=> $item)
@@ -126,15 +123,6 @@
                       </td>
                       <td>
                          @if(isset($item->Attribute)) 
-                             {{$details->quantity}} pcs
-                                @php $stock=$details->quantity; @endphp
-                                @else 
-                                {{$item->Product->quantity}} pcs
-                                @php $stock=$item->Product->quantity; @endphp
-                          @endif
-                      </td>
-                      <td>
-                         @if(isset($item->Attribute)) 
                              {{number_format($details->sale_price)}} Tk
                                @php $price=$details->sale_price; @endphp
                                 @else 
@@ -144,15 +132,6 @@
                       </td>
                       <td>{{$item->quantity}} pcs</td>
                       <td> Tk {{number_format($price*$item->quantity)}} </td>
-
-                      <form method="post" action="{{route('customer.order.update',$item->id)}}">
-                          @csrf 
-                      <td><input type="number" name="quantity" min="1" max="{{$stock}}" required></td>
-                      <td>
-                         <button type="submit" name="action" value="minus" class="btn btn-warning"><i class="fa fa-minus"></i></button>
-                         <button type="submit" name="action" value="plus" class="btn btn-success text-white"><i class="fa fa-plus"></i></button>
-                      </td>
-                      </form>
                     </tr>
                     @empty
                     <p>No Item Found</p>
@@ -164,14 +143,13 @@
                 <div class="table-responsive">
                   <table class="table table-bordered">
                      <tr>
-                         <th>Sl</th>
-                         <th>Shop</th>
-                         <th>Product</th>
-                         <th>Image</th>
-                         <th>Stock</th>
-                         <th>Price</th>
-                         <th>Order Quantity</th>
-                         <th>Sub Total</th>
+                        <th>Sl</th>
+                        <th>Shop</th>
+                        <th>Product</th>
+                        <th>Image</th>
+                        <th>Price</th>
+                        <th>Order Quantity</th>
+                        <th>Sub Total</th>
                       </tr>
   
                       @forelse($order->orderItem as $key=> $item)

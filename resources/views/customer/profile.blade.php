@@ -40,7 +40,7 @@
                         @if($profile->image=='')
                         <div class="text-center"><img src="{{asset('customer/profile/no-image.jpg')}}" width="50px" height="50px"></div>
                         @else 
-                        <img src="{{asset('customer/profile/'.$profile->image)}}" width="50px" height="50px">
+                        <div class="text-center"> <img src="{{asset('customer/profile/'.$profile->image)}}" width="50px" height="50px"></div>
                         @endif
                         <div class="py-1 text-center">Name: {{$profile->first_name}} {{$profile->last_name}}</div>
                         <div class="py-1 text-center">Email: {{$profile->email}}</div>
@@ -52,7 +52,7 @@
 
                   <div class="col-md-8">
                     @include('admin.include.message')
-                     <form method="post" action="{{route('customer.profile.update',$profile->id)}}">
+                     <form method="post" action="{{route('customer.profile.update',$profile->id)}}" enctype="multipart/form-data">
                          @csrf 
                          <div class="form-group">
                            <label>First Name</label>

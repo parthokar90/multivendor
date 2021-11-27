@@ -77,6 +77,7 @@ class ProductController extends Controller
         return view('admin.product.index',compact('list'));
     }
 
+    //this function is for edit
     public function edit($id){
         $product = Product::findOrFail($id);
         $attributeType=$this->activeType();
@@ -95,7 +96,6 @@ class ProductController extends Controller
 
     //update product status
     public function update(Request $request,$id){
-
        $pro = Product::findOrFail($id);
        $pro->status=$request->status;
        $pro->save();

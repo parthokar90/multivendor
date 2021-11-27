@@ -154,7 +154,7 @@
                         <div class="checkout">
                             <div class="total d-flex justify-content-between">
                                 <h5>total</h5>
-                                <p>Tk {{$subTotal-$coupon}}</p>
+                                <p>Tk {{number_format($subTotal-$coupon)}}</p>
                             </div>
                             <label class="input-container">
                                 <span>Direct Bank Transfer</span>

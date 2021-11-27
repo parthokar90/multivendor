@@ -29,7 +29,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('wishlist.index')}}"
+                            <a target="_blank" class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('wishlist.index')}}"
                                 aria-expanded="false">
                                 <i class="fa fa-font" aria-hidden="true"></i>
                                 <span class="hide-menu">Wishlist</span>

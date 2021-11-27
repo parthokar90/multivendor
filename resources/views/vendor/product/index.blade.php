@@ -22,8 +22,8 @@
             <div class="card mb-3">
                 <div class="card-body">
                        @include('admin.include.message')
-                       <div class="table-responsive">
-                            <table class="datatable table  table-hover display">
+           
+                            <table class="datatable table table-hover display">
                                 <thead>
                                     <tr>
                                         <th>Sl</th>
@@ -36,7 +36,7 @@
                                     </tr>
                                 </thead>
                             </table>
-                       </div>
+                       <
                   </div>
              </div>
         </div>
@@ -47,6 +47,7 @@
       var table = $('.datatable').DataTable({
           processing: true,
           serverSide: true,
+          scrollX: false, 
           ajax: "{{ route('products.index') }}",
           columns: [
               {data: 'DT_RowIndex', name: 'DT_RowIndex'},

@@ -36,9 +36,9 @@
                                     @foreach($list as $key=>$order)
                                     <tr>
                                         <td>{{++$key}}</td>
-                                        <td>{{date('d-m-Y h:i:a',strtotime($order->order_date))}}</td>
+                                        <td>{{date('d-m-Y h:i:a',strtotime($order->created_at))}}</td>
                                         <td>{{optional($order->status)->status_name}}</td>
-                                        <td><a href="{{route('customer.order.edit',$order->id)}}"><i class="fa fa-edit"></i></a></td>
+                                        <td><a href="{{route('customer.order.edit',$order->id)}}"><i class="fa fa-eye"></i></a></td>
                                     </tr>
                                     @endforeach 
                                 </tbody>

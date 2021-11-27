@@ -37,9 +37,4 @@ class OrderController extends Controller
         return view('customer.order.orderDetails',compact('order','totalItem','defaultPrice','attributePrice','totalQty'));
     }
 
-    public function orderUpdate(Request $request, $id){
-        $qty=$request->quantity;
-        $orderItem=OrderItem::findOrFail($id);
-        $this->updateOrderItem($request->action,$id,$orderItem->product_id,$orderItem->attribute_value_id,$qty); 
-    }
 }

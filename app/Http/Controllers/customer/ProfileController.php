@@ -24,12 +24,10 @@ class ProfileController extends Controller
 
         $profile = User::findOrFail($id);
          //check if file is upload
-       $image_name='';
+       $image_name=$profile->image;
        if($request->hasFile('image')){
            $image_name = time().'.'.$request->image->getClientOriginalExtension();
-           $request->image->move(('vendor/product/'), $image_name);
-       }else{
-        $image_name=$profile->image;
+           $request->image->move(('customer/profile/'),$image_name);
        }
         $profile->first_name=$request->first_name;
         $profile->last_name=$request->last_name;
