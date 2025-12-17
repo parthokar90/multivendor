@@ -129,11 +129,6 @@ multivendor-ecommerce/
 
 ### 1️⃣ Clone Repository
 
-```bash
-git clone https://github.com/your-username/multivendor-ecommerce.git
-cd multivendor-ecommerce
-```
-
 ### 2️⃣ Install Dependencies
 
 ```bash
