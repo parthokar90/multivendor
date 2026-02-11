@@ -6,9 +6,9 @@ This system is suitable for building marketplaces like **Daraz, Amazon, or Etsy 
 
 ---
 
-## 🚀 Core Features
+##  Core Features
 
-### 👑 Admin Panel
+### Admin Panel
 
 * Admin authentication
 * Dashboard with analytics
@@ -22,7 +22,7 @@ This system is suitable for building marketplaces like **Daraz, Amazon, or Etsy 
 
 ---
 
-### 🏪 Vendor Panel
+###  Vendor Panel
 
 * Vendor registration & verification
 * Vendor dashboard
@@ -35,7 +35,7 @@ This system is suitable for building marketplaces like **Daraz, Amazon, or Etsy 
 
 ---
 
-### 🛍 Customer Panel
+###  Customer Panel
 
 * Customer registration & login
 * Product browsing & search
@@ -47,7 +47,7 @@ This system is suitable for building marketplaces like **Daraz, Amazon, or Etsy 
 
 ---
 
-### 📦 Product Management
+###  Product Management
 
 * Multi-category support
 * Brand support
@@ -57,7 +57,7 @@ This system is suitable for building marketplaces like **Daraz, Amazon, or Etsy 
 
 ---
 
-### 🧾 Order & Payment
+###  Order & Payment
 
 * Multi-vendor order splitting
 * Order status tracking
@@ -67,7 +67,7 @@ This system is suitable for building marketplaces like **Daraz, Amazon, or Etsy 
 
 ---
 
-### 💰 Commission & Payout
+###  Commission & Payout
 
 * Admin commission system
 * Vendor earnings calculation
@@ -76,7 +76,7 @@ This system is suitable for building marketplaces like **Daraz, Amazon, or Etsy 
 
 ---
 
-### 📊 Reports & Analytics
+###  Reports & Analytics
 
 * Total sales report
 * Vendor-wise sales report
@@ -86,7 +86,7 @@ This system is suitable for building marketplaces like **Daraz, Amazon, or Etsy 
 
 ---
 
-## 🛠 Tech Stack
+##  Tech Stack
 
 * **Backend:** Laravel
 * **Frontend:** Blade / Bootstrap / Tailwind
@@ -96,7 +96,7 @@ This system is suitable for building marketplaces like **Daraz, Amazon, or Etsy 
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```
 multivendor-ecommerce/
@@ -191,7 +191,7 @@ Visit: `http://127.0.0.1:8000`
 
 ---
 
-## 🤝 Contributing
+##  Contributing
 
 1. Fork the repository
 2. Create a feature branch
@@ -200,13 +200,13 @@ Visit: `http://127.0.0.1:8000`
 
 ---
 
-## 📄 License
+##  License
 
 Licensed under the **MIT License**.
 
 ---
 
-## 👨‍💻 Author
+##  Author
 
 **Partho**
 Senior Software Developer
@@ -214,4 +214,4 @@ Laravel | PHP | MySQL | SaaS
 
 ---
 
-⭐ If you find this project useful, give it a star!
+If you find this project useful, give it a star!
